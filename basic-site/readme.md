@@ -210,12 +210,11 @@ It should look like this.
 ```
 4. Reload the page.  You should see the links have become larger and red.
 
-### Step 6 - Scripts
+### Step 6 - First Script
 
 Lets move on to some javascript.  So what is it.  JavaScript is a programming language used to make webpages interactive.  It can also be run on servers, but not what we are going to look at.
 
 Lets add a button to the page, that when pressed displays the date and time.
-
 
 
 1.  In the body section add a button tag as shown below.
@@ -245,4 +244,64 @@ When the button is clicked, it runs the following Javascript.  This gets our par
 ```
 document.getElementById('demo').innerHTML = Date()
 ```
+
+You can use the javascript getElementById to change lots of diffeent things about an element.  For more examples look here https://www.w3schools.com/js/js_intro.asp
+
+### Step 7 - I'm lazy, lets do this once more
+
+Now imagine we wanted to run this code for multiple paragraph tags.  Sound familiar?  And then we want to change the code once, rather than in multiple places.  Lets [refactor](https://en.wikipedia.org/wiki/Code_refactoring) the code to make this possible.
+
+1. Javascript allows you to create functions.  Functions are a handy way to allow for code to be reused.  In the head section of the page add the following script tag.
+
+```
+<script>
+function setDateTime(){
+    document.getElementById("demo").innerHTML = Date();
+}
+</script>
+```
+
+2. Next we update the button to use this function.  Update the button tag as follows:
+
+```
+<button type="button"
+onclick="setDateTime()">
+Click me to display Date and Time.</button>
+```
+
+3. Cool, but our requirements is to have multiple buttons and paragraph tags.  Lets copy and paste the button and paragraph tags and update the id.  
+
+```
+    <button type="button" onclick="setDateTime()">
+        Click me to display Date and Time.</button>
+    <p id="demo"></p>
+    <button type="button" onclick="setDateTime()">
+        Click me to display Date and Time.</button>
+    <p id="another"></p>
+```
+
+4.  Save the page and reload in the browsers.  Clicking either button runs the javascript, but it only updates one paragraph tag.  Lets fix that.
+
+5. We are going to pass the id as a parameter to our function.  Change the function to have parameter and to use it in the ```getElementById``` call.
+
+```
+   <script>
+        function setDateTime(targetID) {
+            document.getElementById(targetID).innerHTML = Date();
+        }
+    </script>
+```
+
+6.  No lets update our buttons to call the function with a parameter of the paragraph id.
+
+```
+    <button type="button" onclick="setDateTime('demo')">
+        Click me to display Date and Time.</button>
+    <p id="demo"></p>
+    <button type="button" onclick="setDateTime('another')">
+        Click me to display Date and Time.</button>
+    <p id="another"></p>
+```
+
+7. Save the page and reload in the browsers.  Clicking either button runs the javascript but now it updates the paragraph using the id we pass in as a parameter.
 

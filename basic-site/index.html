@@ -3,6 +3,11 @@
 <head>
     <title>My First Page</title>
     <link rel="stylesheet" type="text/css" href="./styles.css">
+    <script>
+        function setDateTime(targetID) {
+            document.getElementById(targetID).innerHTML = Date();
+        }
+    </script>
 </head>
 
 <body style="background:yellow;">
@@ -19,6 +24,13 @@
     <br/>
     <br/> The br tag added
     <br/> a break between the lines
+
+    <button type="button" onclick="setDateTime('demo')">
+        Click me to display Date and Time.</button>
+    <p id="demo"></p>
+    <button type="button" onclick="setDateTime('another')">
+        Click me to display Date and Time.</button>
+    <p id="another"></p>
 </body>
 
 </html>
