@@ -1,5 +1,8 @@
 # Making games for the web with Phaser 
 
+<h1>Under Construction</h1>
+I'm not finished, so bookmark this page of favorite it in github.  I'll remove this section once done.  
+
 ## What is Phaser
 
 Phaser is a javascript framework for making HTML5 Desktop and Mobile games.
