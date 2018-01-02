@@ -292,7 +292,7 @@ Click me to display Date and Time.</button>
     </script>
 ```
 
-6.  No lets update our buttons to call the function with a parameter of the paragraph id.
+6.  Now lets update our buttons to call the function with a parameter of the paragraph id.
 
 ```
     <button type="button" onclick="setDateTime('demo')">
@@ -305,3 +305,24 @@ Click me to display Date and Time.</button>
 
 7. Save the page and reload in the browsers.  Clicking either button runs the javascript but now it updates the paragraph using the id we pass in as a parameter.
 
+### Step 8 - I'm lazy, lets do this once more again
+
+But we can do better.  Lets move this function to an other file, similar to the ```styles.css``` file, that we can reference on other pages.
+
+1. Create a new file and call it ```scripts.jss```.  Save it in the same directory as the ```index.html``` file.
+
+2. Cut the function we created into this file, you do not need the ```<script></script>``` tags and paste it in the ```scripts.js``` file.
+
+```
+function setDateTime(targetID) {
+    document.getElementById(targetID).innerHTML = Date();
+}
+```
+
+3. Next we are going to update the ```index.html``` to use this new javascript file.  
+
+```
+   <script src="scripts.js"></script>
+```
+
+4. Save both files and reload the page in the browser.  If everything is correct, clicking the buttons should have the same result.
