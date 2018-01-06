@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Car Game - Step 1</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body style="background:darkblue">
+
+    <script type="text/javascript">
+
+
+        const MAX_SPEED = -2000;
+        const MAX_TURN_SPEED = 150;
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+        function preload() {
+
+            game.load.image('player', 'assets/car-truck1.png');
+            game.load.image('car1', 'assets/car-truck2.png');
+            game.load.image('car2', 'assets/car-truck3.png');
+            game.load.image('truck1', 'assets/car-truck4.png');
+            game.load.image('truck2', 'assets/car-truck5.png');
+
+            game.load.image('tiles', 'assets/tiles.png');
+
+            game.load.tilemap('map', 'assets/road_data.csv', null, Phaser.Tilemap.CSV);
+
+
+        }
+
+        function create() {
+
+            //  Create our map (the 32x32 is the tile size)
+            map = game.add.tilemap('map', 32, 32);
+
+            // Set up collision on the grass tiles
+            map.setCollisionBetween(0, 0, true);
+
+            //  'tiles' = cache image key, 32x32 = tile size
+            map.addTilesetImage('tiles', 'tiles', 32, 32);
+
+            //  0 is important
+            layer = map.createLayer(0);
+
+            //  Scroll it
+            layer.resizeWorld();
+
+            console.log('h', map.height);
+            let playerMapStart = map.height * map.tileHeight;
+
+            // The player and its settings
+            player = game.add.sprite(game.world.centerX, playerMapStart, 'player');
+
+            player.anchor.setTo(0.5, 0.5);
+            game.camera.follow(player);
+
+            //  We need to enable physics on the player
+            game.physics.arcade.enable(player);
+
+            // prevent car from leaving the screen
+            player.body.collideWorldBounds = true;
+
+            // Slow the car down when not accellerating
+            player.body.drag.set(500);
+
+            // Bounce when hitting stuff
+            player.body.bounce.x = 2;
+            player.body.bounce.y = 0;
+
+            //Create cursors for keyboard handling
+            cursors = game.input.keyboard.createCursorKeys();
+
+        }
+
+        function update() {
+
+            game.physics.arcade.collide(player, layer, collisionHandler, null, this);
+
+            if (cursors.left.isDown) {
+                //  Move to the left
+                player.body.velocity.x -= 10;
+                player.angle = -15;
+            }
+            else if (cursors.right.isDown) {
+                //  Move to the right
+                player.body.velocity.x += 20;
+                player.angle = 15;
+            }
+            else {
+                player.angle = 0;
+            }
+
+            if (cursors.up.isDown) {
+                player.body.velocity.y += -20;
+            }
+            else if (cursors.down.isDown) {
+                player.body.velocity.y += 10;
+            }
+
+            if (player.body.velocity.y < MAX_SPEED) {
+                player.body.velocity.y = MAX_SPEED;
+            }
+
+            if (player.body.velocity.x < -1 * MAX_TURN_SPEED
+                || player.body.velocity.x > MAX_TURN_SPEED) {
+                const lockTurnSpeed = Math.sign(player.body.velocity.x) * MAX_TURN_SPEED;
+                player.body.velocity.x = lockTurnSpeed;
+            }
+
+        }
+
+        function collisionHandler(player, grass) {
+
+            // if (player.body.blocked.left) {
+            //     // player.position.x = player.position.x ;
+
+            // } else if (player.body.blocked.right) {
+            //     player.body.velocity.x = -100;
+            // }
+            // else {
+            //     // player.body.velocity.x = game.rnd.integerInRange(-200, 200);
+
+            //     console.log('not blocking - barf')
+            // }
+            player.body.velocity.y -= 5;
+        }
+
+    </script>
+
+</body>
+
+</html>
