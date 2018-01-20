@@ -1,0 +1,228 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Shoot Em Up - Step 1</title>
+    <script type="text/javascript" src="js/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body style="background:darkblue">
+
+    <script type="text/javascript">
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+        function preload() {
+
+            // 80 × 48
+            game.load.spritesheet('player', 'assets/shipx2.png', 32, 48, 10);
+            game.load.spritesheet('lasers', 'assets/laser-boltsx2.png', 32, 32, 4);
+            game.load.spritesheet('alien-small', 'assets/enemy-smallx2.png', 32, 32, 2);
+            game.load.spritesheet('kaboom', 'assets/explosionx2.png', 32, 32, 4);
+        }
+
+        function create() {
+
+            //  We're going to be using physics, so enable the Arcade Physics system
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+
+            // The player and its settings
+            player = game.add.sprite(game.world.centerX, game.world.height - 80, 'player');
+
+            // We need to enable physics on the player
+            game.physics.arcade.enable(player);
+
+            // Set up animations
+            // 0, 1, 2, 3, 4
+            // 5, 6, 7, 8, 9
+            player.animations.add('ahead', [2, 7], 10, true);
+            player.animations.add('left', [0, 5], 10, false);
+            player.animations.add('right', [4, 9], 10, false);
+            player.animations.play('ahead', 10, true);
+
+            // Player bullets
+            weaponPlayer = game.add.weapon(30, 'lasers');
+
+            //  The bullet will be automatically killed when it leaves the world bounds
+            weaponPlayer.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+
+            //  Because our bullet is drawn facing up, we need to offset its rotation:
+            weaponPlayer.bulletAngleOffset = 90;
+
+            //  The speed at which the bullet is fired
+            weaponPlayer.bulletSpeed = 400;
+
+            //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+            weaponPlayer.fireRate = 120;
+
+            //  Tell the weaponPlayer to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
+            weaponPlayer.trackSprite(player, 15, -5);
+
+            //  The baddies!
+            aliens = game.add.group();
+            aliens.enableBody = true;
+            aliens.physicsBodyType = Phaser.Physics.ARCADE;
+
+            createAliens();
+
+            // Alien bullets
+            weaponAlien = game.add.weapon(30, 'lasers');
+
+            //  The bullet will be automatically killed when it leaves the world bounds
+            weaponAlien.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+
+            //  Because our bullet is drawn facing up, we need to offset its rotation:
+            weaponAlien.bulletAngleOffset = 90;
+
+            //  The speed at which the bullet is fired
+            weaponAlien.bulletSpeed = 400;
+
+            //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+            weaponAlien.fireRate = 120;
+
+            //  Tell the weaponAlien to track the 'player' Sprite, offset by 14px horizontally, 0 vertically
+            weaponAlien.trackSprite(player, 15, -5);
+
+
+            //  An explosion pool
+            explosions = game.add.group();
+            explosions.createMultiple(30, 'kaboom');
+            explosions.forEach(setupExplosion);
+
+            //Create keyboard handlers
+            leftKey = game.input.keyboard.addKey(Phaser.Keyboard.J);
+            rightKey = game.input.keyboard.addKey(Phaser.Keyboard.K);
+            shootKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+
+            firingTimer = 0;
+
+        }
+
+        function setupExplosion(explosion) {
+            explosion.animations.add('kaboom');
+        }
+
+        function update() {
+
+            // game.physics.arcade.collide(player, layer, collisionHandler, null, this);
+            if (leftKey.isDown) {
+                //  Move to the left
+                player.body.velocity.x = -100;
+                player.animations.play('left', 20, false);
+
+            } else if (rightKey.isDown) {
+                //  Move to the right
+                player.body.velocity.x = 100;
+                player.animations.play('right', 20, false);
+            } else {
+                player.body.velocity.x = 0;
+                player.animations.play('ahead', 20, false);
+            }
+
+            if (shootKey.isDown) {
+                weaponPlayer.fire();
+            }
+
+
+            if (game.time.now > firingTimer) {
+                enemyFires();
+            }
+            //  Run collision
+            game.physics.arcade.overlap(weaponPlayer.bullets, aliens, playerHitsAlien, null, this);
+            game.physics.arcade.overlap(weaponAlien.bullets, player, alienHitsPlayer, null, this);
+
+        }
+
+        function alienHitsPlayer(player, bullet) {
+
+            bullet.kill();
+
+            //  And create an explosion :)
+            var explosion = explosions.getFirstExists(false);
+            explosion.reset(player.body.x, player.body.y);
+            explosion.play('kaboom', 30, false, true);
+
+        }
+
+        function playerHitsAlien(alien, bullet) {
+
+            //  When a bullet hits an alien we kill them both
+            bullet.kill();
+            alien.kill();
+
+            //  And create an explosion :)
+            var explosion = explosions.getFirstExists(false);
+            explosion.reset(alien.body.x, alien.body.y);
+            explosion.play('kaboom', 30, false, true);
+
+        }
+
+        function createAliens() {
+
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 10; x++) {
+                    var alien = aliens.create(x * 48, y * 50, 'alien-small');
+                    alien.anchor.setTo(0.5, 0.5);
+                    alien.animations.add('fly', [0, 1], 20, true);
+                    alien.play('fly');
+                    alien.body.moves = false;
+
+                }
+            }
+
+            aliens.x = 100;
+            aliens.y = 50;
+
+            //  All this does is basically start the invaders moving. Notice we're moving the Group they belong to, rather than the invaders directly.
+            var tween = game.add.tween(aliens).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
+
+
+            //  When the tween loops it calls descend
+            tween.onLoop.add(descend, this);
+        }
+
+        function enemyFires() {
+
+            //  Grab the first bullet we can from the pool
+            enemyBullet = weaponAlien.bullets.getFirstExists(false);
+
+            var livingEnemies = [];
+
+            aliens.forEachAlive(function (alien) {
+
+                // put every living enemy in an array
+                livingEnemies.push(alien);
+            });
+
+
+            if (enemyBullet && livingEnemies.length > 0) {
+
+                var random = game.rnd.integerInRange(0, livingEnemies.length - 1);
+
+                // randomly select one of them
+                var shooter = livingEnemies[random];
+                // And fire the bullet from this enemy
+                enemyBullet.reset(shooter.body.x, shooter.body.y);
+
+                game.physics.arcade.moveToObject(enemyBullet, player, 120);
+                firingTimer = game.time.now + 250;
+            }
+
+        }
+
+        function descend() {
+
+            aliens.y += 10;
+
+        }
+    </script>
+
+</body>
+
+</html>
