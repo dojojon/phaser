@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 1</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+
+        var player;
+
+        function preload() {
+
+            // Load the game assets
+            game.load.image('road', 'assets/road.png');
+            game.load.image('unicorn', 'assets/unicorn.png');
+            game.load.image('car', 'assets/car.png');
+
+        }
+
+        function create() {
+
+            player = game.add.sprite(game.world.centerX, game.world.height - 100, 'car');
+            player.anchor.setTo(0.5, 0.5);
+
+        }
+
+        function update() {
+
+        }
+
+        function render() {
+
+        }
+
+    </script>
+
+</body>
+
+</html>

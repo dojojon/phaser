@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 1</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+
+        var player;
+        var road;
+        var speed = -200;
+        var cursors;
+
+        function preload() {
+
+            // Load the game assets
+            game.load.image('road', 'assets/road.png');
+            game.load.image('unicorn', 'assets/unicorn.png');
+            game.load.image('car', 'assets/car.png');
+
+        }
+
+        function create() {
+
+            // Enable arcade physics
+            game.physics.startSystem(Phaser.Physics.Arcade);
+
+            //Set up road
+            road = game.add.tileSprite(0, 0, 800, 20000, 'road');
+            game.world.setBounds(0, 0, 800, 20000);
+
+            // Create the player
+            player = game.add.sprite(game.world.centerX, game.world.height - 100, 'car');
+            player.anchor.setTo(0.5, 0.5);
+
+            // Set the camera to follow the player
+            game.camera.follow(player);
+
+            // Enable physics on the player
+            game.physics.arcade.enable(player);
+
+            // Set up the cursors to allow player to control car
+            cursors = game.input.keyboard.createCursorKeys();
+
+        }
+
+        function update() {
+
+            // Set the players speed
+            player.body.velocity.y = speed;
+
+            // Check to see if the player is holding down a cursor key.
+            player.body.velocity.x = 0;
+            if (cursors.right.isDown) {
+                player.body.velocity.x = 250;
+            }
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -250;
+            }
+
+        }
+
+        function render() {
+            // game.debug.spriteInfo(player, 32, 32);
+        }
+
+    </script>
+
+</body>
+
+</html>

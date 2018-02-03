@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Phaser - Making your first game, part 1</title>
+    <title>DonkyCorn</title>
     <script type="text/javascript" src="js/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -16,10 +16,10 @@
 
     <script type="text/javascript">
 
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
         var player;
-        var roadSprite;
+        var road;
         var unicorns;
         var speed = -200;
         var cursors;
@@ -35,28 +35,21 @@
 
         function create() {
 
+            //Set up road
+            road = game.add.tileSprite(0, 0, 800, 20000, 'road');
+            game.world.setBounds(0, 0, 800, 20000);
+
             // Enable arcade physics
             game.physics.startSystem(Phaser.Physics.Arcade);
 
-            //Set up road
-            game.add.tileSprite(0, 0, 800, 20000, 'road');
-            game.world.setBounds(0, 0, 800, 20000);
-
             // Create Player
-            player = game.add.sprite(game.world.centerX + 100, game.world.height - 160, 'car');
+            player = game.add.sprite(game.world.centerX + 100, game.world.height - 100, 'car');
             player.anchor.setTo(0.5, 0.5);
-
-            game.physics.arcade.enable(player);
-            bounds = new Phaser.Rectangle(100, 100, 500, 400);
-
-            //  Create a graphic so you can see the bounds
-            var graphics = game.add.graphics(bounds.x, bounds.y);
-            graphics.beginFill(0x000077);
-            graphics.drawRect(0, 0, bounds.width, bounds.height);
-
 
             // Set the camera to follow the player
             game.camera.follow(player);
+
+            game.physics.arcade.enable(player);
 
             // Create unicorns
             createUnicorns();
@@ -101,12 +94,10 @@
             // Check to see if we have hit any unicorns
             game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
 
-            //Set the player speed
+            //Set the players speed
             player.body.velocity.y = speed;
 
-            // Increase the player speed
-            speed--;
-
+            player.body.velocity.x = 0;
             if (cursors.right.isDown) {
                 player.body.velocity.x = 250;
             }
@@ -114,19 +105,25 @@
                 player.body.velocity.x = -250;
             }
 
-            // console.log(player.position);
             // if (player.position.x < game.world.centerX - 150) {
-            //     player.position.x = game.world.centerX - 150;
-            //     player.body.velocity.x = 0;
+            //     // player.position.x = game.world.centerX - 150;
+            //     player.body.velocity.x = -2;
             // } else if (player.position.x > game.world.centerX + 150) {
-            //     player.position.x = game.world.centerX + 150;
-            //     player.body.velocity.x = 0;
+            //     // player.position.x = game.world.centerX + 150;
+            //     player.body.velocity.x = +2;
             // }
+
+            // Increase the player speed
+            speed--;
 
         }
 
         function collisionHandler() {
             // console.log('whoops hit one');
+        }
+
+        function render() {
+            console.warn('render');
         }
     </script>
 
