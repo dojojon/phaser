@@ -151,7 +151,7 @@ To change the position of the car we can use an if statement to check to see if 
 Save and run the game.  You should be able to contol the car using the cursor keys.
 
 
-Step 6 
+### Step 6 
 
 As you can image there is a lot going on in the game that is hidden from us.  Each sprite has a position and a bunch of other properties that set define what it looks like and how it is drawn (render).
 
