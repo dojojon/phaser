@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 1</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+        var player;
+        var roadSprite;
+        var unicorns;
+        var speed = -200;
+        var cursors;
+
+        function preload() {
+
+            // Load the game assets
+            game.load.image('road', 'assets/road.png');
+            game.load.image('unicorn', 'assets/unicorn.png');
+            game.load.image('car', 'assets/car.png');
+
+        }
+
+        function create() {
+
+            // Enable arcade physics
+            game.physics.startSystem(Phaser.Physics.Arcade);
+
+            //Set up road
+            game.add.tileSprite(0, 0, 800, 20000, 'road');
+            game.world.setBounds(0, 0, 800, 20000);
+
+            // Create Player
+            player = game.add.sprite(game.world.centerX + 100, game.world.height - 160, 'car');
+            player.anchor.setTo(0.5, 0.5);
+
+            game.physics.arcade.enable(player);
+            bounds = new Phaser.Rectangle(100, 100, 500, 400);
+
+            //  Create a graphic so you can see the bounds
+            var graphics = game.add.graphics(bounds.x, bounds.y);
+            graphics.beginFill(0x000077);
+            graphics.drawRect(0, 0, bounds.width, bounds.height);
+
+
+            // Set the camera to follow the player
+            game.camera.follow(player);
+
+            // Create unicorns
+            createUnicorns();
+
+            // Set up the cursors to allow player to control car
+            cursors = game.input.keyboard.createCursorKeys();
+        }
+
+        function createUnicorns() {
+
+            unicorns = game.add.group();
+            unicorns.enableBody = true;
+            unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+            let posY = game.world.height;
+
+            // unicorn
+            for (var c = 0; c < 20; c++) {
+
+                //Set the next unicorn position
+                posY = posY - 750;
+
+                // Randomly position the unicorn 
+                const left = Phaser.Math.chanceRoll(50);
+
+                let posX = 0;
+                if (left) {
+                    posX = game.world.centerX - 100;
+                } else {
+                    posX = game.world.centerX + 100;
+                }
+
+                // Create a unicorn
+                var unicorn = unicorns.create(posX, posY, 'unicorn');
+                unicorn.anchor.setTo(0.5, 0.5);
+
+            }
+        }
+
+        function update() {
+
+            // Check to see if we have hit any unicorns
+            game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+
+            //Set the player speed
+            player.body.velocity.y = speed;
+
+            // Increase the player speed
+            speed--;
+
+            if (cursors.right.isDown) {
+                player.body.velocity.x = 250;
+            }
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -250;
+            }
+
+            // console.log(player.position);
+            // if (player.position.x < game.world.centerX - 150) {
+            //     player.position.x = game.world.centerX - 150;
+            //     player.body.velocity.x = 0;
+            // } else if (player.position.x > game.world.centerX + 150) {
+            //     player.position.x = game.world.centerX + 150;
+            //     player.body.velocity.x = 0;
+            // }
+
+        }
+
+        function collisionHandler() {
+            // console.log('whoops hit one');
+        }
+    </script>
+
+</body>
+
+</html>
