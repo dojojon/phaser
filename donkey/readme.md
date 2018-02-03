@@ -1,13 +1,13 @@
-# Donkey
+# Donkey Corn
 
 In this tutorial we are going to make a simple game using Phaser.io base on [DONKEY.BAS](https://en.wikipedia.org/wiki/DONKEY.BAS)  a game written in 1981 and included with early versions of the PC DOS operating system distributed with the original IBM PC. It is a driving game in which the player must avoid hitting donkeys. The game was written by Microsoft co-founder Bill Gates and Neil Konzen.
 
 In our updated version we are replacing Donkies with Unicorns and will have different mechanics for the car.
 
 
-## Pre Requistites
+## Pre Requisites
 
-IDE VS Code, Python3 for a web server.
+IDE VS Code, Python3 for a web server.  
 
 ## Steps
 
@@ -169,4 +169,10 @@ You probably don't want this information displayed all the time.  So you can com
 
 ```
     // game.debug.spriteInfo(player);
+```
+
+We can also print some text to the screen.  Lets see if we can display the speed.
+
+```
+    game.debug.text( "Speed " + speed , 100, 380 );
 ```
