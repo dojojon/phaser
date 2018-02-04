@@ -46,9 +46,6 @@
             player = game.add.sprite(game.world.centerX + 100, game.world.height - 100, 'car');
             player.anchor.setTo(0.5, 0.5);
 
-            // Set the camera to follow the player
-            game.camera.follow(player);
-
             game.physics.arcade.enable(player);
 
             // Create unicorns
@@ -91,6 +88,9 @@
 
         function update() {
 
+            // Set the camera position so car is at bottom of the screen
+            game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
+
             // Check to see if we have hit any unicorns
             game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
 
@@ -123,7 +123,6 @@
         }
 
         function render() {
-            console.warn('render');
         }
     </script>
 
