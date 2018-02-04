@@ -23,6 +23,7 @@
         var unicorns;
         var speed = -200;
         var cursors;
+        var verges;
 
         function preload() {
 
@@ -30,6 +31,8 @@
             game.load.image('road', 'assets/road.png');
             game.load.image('unicorn', 'assets/unicorn.png');
             game.load.image('car', 'assets/car.png');
+            game.load.image('pixel', 'assets/pixel.png');
+            game.load.image('clear_pixel', 'assets/transparent_pixel.png');
 
         }
 
@@ -48,11 +51,30 @@
 
             game.physics.arcade.enable(player);
 
+            // Create Verges
+            createVerges();
+
             // Create unicorns
             createUnicorns();
 
             // Set up the cursors to allow player to control car
             cursors = game.input.keyboard.createCursorKeys();
+        }
+
+        function createVerges() {
+
+            verges = game.add.group();
+            verges.enableBody = true;
+            verges.physicsBodyType = Phaser.Physics.ARCADE;
+
+            var left = verges.create(0, 0, 'clear_pixel');
+            left.body.immovable = true;
+            left.scale.setTo(200, game.world.height);
+
+            var right = verges.create(600, 0, 'clear_pixel');
+            right.body.immovable = true;
+            right.scale.setTo(200, game.world.height);
+
         }
 
         function createUnicorns() {
@@ -88,6 +110,9 @@
 
         function update() {
 
+            // Player collides with vergs
+            game.physics.arcade.collide(player, verges);
+
             // Set the camera position so car is at bottom of the screen
             game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
 
@@ -104,14 +129,6 @@
             if (cursors.left.isDown) {
                 player.body.velocity.x = -250;
             }
-
-            // if (player.position.x < game.world.centerX - 150) {
-            //     // player.position.x = game.world.centerX - 150;
-            //     player.body.velocity.x = -2;
-            // } else if (player.position.x > game.world.centerX + 150) {
-            //     // player.position.x = game.world.centerX + 150;
-            //     player.body.velocity.x = +2;
-            // }
 
             // Increase the player speed
             speed--;
