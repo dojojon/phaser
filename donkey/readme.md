@@ -702,6 +702,33 @@ Add a call to this function in the ```collisionHandler()```.  We can pass throug
 ```
 
 
-Save the game and i
+Save the game and give it a test.
+
+### Set 12
+
+Ok.  So we have a basic game, but it needs some tweaks to make it more enjoyable.  First lets move the car towards the bottom of the screen.  This will give the players more time to react to unicorns approaching.
+
+In the ```create()``` function we set the camera up to follow the player.  This means the car is in the center of the world.
+
+Delete the following line from the create function.
+
+```
+    // Set the camera to follow the player
+    game.camera.follow(player);
+            
+```
+
+In the ```update()``` function add the following line to set the camera to the players position, but setting the y to be offset by -200.
+
+```
+    // Set the camera position so car is at bottom of the screen
+    game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
+```
+
+Save the game and give it a test.  The car should now be at the bottom of the screen.
+
+
+
+
 
 # To Be Continued

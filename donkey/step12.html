@@ -51,9 +51,6 @@
             player = game.add.sprite(game.world.centerX, game.world.height - 100, 'car');
             player.anchor.setTo(0.5, 0.5);
 
-            // Set the camera to follow the player
-            game.camera.follow(player);
-
             // Enable physics on the player
             game.physics.arcade.enable(player);
 
@@ -93,6 +90,9 @@
 
                 // Check to see if we have hit any unicorns
                 game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+
+                // Set the camera position so car is at bottom of the screen
+                game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
 
                 // Set the players speed
                 player.body.velocity.y = speed;
