@@ -269,7 +269,7 @@ Your completed function should look like this.
     }
 ```
 
-Now we need to call this function from the ```create()``` function.  You can call the function as follows.
+Now we need to call (run) this function from the ```create()``` function.  You can call the function as follows.
 
 ```
     createVerges();
@@ -283,5 +283,187 @@ The last step is to tell the physics engine to check for collisions on each upda
 ```
 
 Save and run the game. The card should now remain on the road.
+
+
+### Step 8
+
+Ok lets add the unicorns.  dd another variable at the top of the code.  This will be used to reference a group containing the unicorns.
+
+```
+        var unicorns;
+```
+
+Create another function to create the unicors, call it call it ```createUnicorns()```.
+
+```
+    function createUnicorns() {
+
+    }
+```
+
+Similar to the verges, we are going to create a group and set the physics on it.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+    }
+```
+
+Next we a variable to hold the y position for each unicord we are going to add.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+    }
+```
+
+We are going to use a for loop to create multipe unicorns.  For loops are very handy.  We can use then to loop round a number of times setting a variable to loop count.  Below we are looping round 20 times and c will be set to the 0 all the way up to 19.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+        for (var c = 0; c < 20; c++) {
+
+        }
+    }
+```
+
+Next we need to calculate the world position of the unicorn.  So for each unicorn we add we will move it down the world (closer to the player) by 750 pixels.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+        // unicorn
+        for (var c = 0; c < 20; c++) {
+
+            //Set the next unicorn position
+            posY = posY - 750;
+
+        }
+    }
+```
+
+We want the unicorns to be either on the left or the right hand side of the road.  We can use a build in Phaser function called chanceRoll that will return true or false randomly.  By using the value 50 we have a 50% change of it being true or false.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+        // unicorn
+        for (var c = 0; c < 20; c++) {
+
+            //Set the next unicorn position
+            posY = posY - 750;
+
+            // Randomly position the unicorn 
+            const left = Phaser.Utils.chanceRoll(50);
+
+        }
+    }
+```
+
+Using the result of chance roll we can calculate the x position of the unicorn.
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+        // unicorn
+        for (var c = 0; c < 20; c++) {
+
+            //Set the next unicorn position
+            posY = posY - 750;
+
+            // Randomly position the unicorn 
+            const left = Phaser.Utils.chanceRoll(50);
+
+            let posX = 0;
+            if (left) {
+                posX = game.world.centerX - 100;
+            } else {
+                posX = game.world.centerX + 100;
+            }
+
+        }
+    }
+```
+
+Add last of all we can now create a unicorn in the unicorns group
+
+```
+    function createUnicorns() {
+
+        unicorns = game.add.group();
+        unicorns.enableBody = true;
+        unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+        let posY = game.world.height;
+
+        // unicorn
+        for (var c = 0; c < 20; c++) {
+
+            //Set the next unicorn position
+            posY = posY - 750;
+
+            // Randomly position the unicorn 
+            const left = Phaser.Utils.chanceRoll(50);
+
+            let posX = 0;
+            if (left) {
+                posX = game.world.centerX - 100;
+            } else {
+                posX = game.world.centerX + 100;
+            }
+
+            // Create a unicorn
+            var unicorn = unicorns.create(posX, posY, 'unicorn');
+            unicorn.anchor.setTo(0.5, 0.5);
+
+        }
+    }
+```
+
+Now we need to call this function from the ```create()``` function.  You can call the function as follows.
+
+```
+    createUnicorns();
+```
+
+
+Save and run the game.  We now have unicorns!!!!
+
+
 
 # To Be Continued
