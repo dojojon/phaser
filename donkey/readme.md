@@ -461,9 +461,124 @@ Now we need to call this function from the ```create()``` function.  You can cal
     createUnicorns();
 ```
 
-
 Save and run the game.  We now have unicorns!!!!
 
+### Step 9 
 
+You may have noticed that we can drive through the unicorns.  This is not them plan.  Lets use the physics engine to detect it the car collides with a unicorn.  Don't worry they are maigical creatures and can easliy survive this.  As everyone know unicorns can disapper using rainbow magic so lets add some.
+
+First we need to get the phaser physic engine to check for collisions between the player and the unicrons group.  Add the following to the top of the ```update()``` funciton.  Similar to the verges check, but this time we will call a function  ```collisionHandler``` when a collision is deteced.
+
+```
+    game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+```
+
+Lets add the function.  We can put any code we want to run on a collision into this.
+
+```
+    function collisionHandler(player, unicorn) {
+
+    }
+```
+
+First lets remove the unicorn from the game world.
+
+```
+    function collisionHandler(player, unicorn) {
+
+        unicorn.kill();
+     
+    }
+```
+
+Next we will make the camera shake and flash the world.
+
+```
+    function collisionHandler(player, unicorn) {
+
+        // Kill the unicorn :-(
+        unicorn.kill();
+
+        // shake the screen and flash is white
+        game.camera.shake(0.01);
+        game.camera.flash();
+
+    }
+```
+
+Save the game and give it a play.  Should should see the screen shake and flash along with the unicorn disappearing.
+
+
+### Setp 10
+
+OK.  We still don't have what we are looking for.  Lets stop the player moving ona collision, its game over for them.
+
+At the top of our script create a variable called ```playing``` and set this to true.
+
+```
+    var playing = true;
+```
+
+In the ```collisionHandler()``` function set ```playing``` to ```false```;
+
+```
+    function collisionHandler(player, unicorn) {
+
+        // Kill the unicorn :-(
+        unicorn.kill();
+
+        // shake the screen and flash is white
+        game.camera.shake(0.01);
+        game.camera.flash();
+
+        playing = false;
+    }
+```
+
+We can now use a if statement to check if this is true or false and change what code it run.  If playing is false, we don't any of the code in the update function to be run, actually we just want the player to stay still in the world.
+
+Coped below is the whole update function.  As you can see we have moved all the current code inside the if statement and added an else to set the players speed to zero if playing is false.
+
+```
+    function update() {
+
+        if (playing) {
+
+            // Player collides with verges
+            game.physics.arcade.collide(player, verges);
+
+            // Set the camera position so car is at bottom of the screen
+            game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
+
+            // Check to see if we have hit any unicorns
+            game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+
+            //Set the players speed
+            player.body.velocity.y = speed;
+
+            player.body.velocity.x = 0;
+            if (cursors.right.isDown) {
+                player.body.velocity.x = 250;
+            }
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -250;
+            }
+
+            // Increase the player speed
+            speed--;
+
+
+        } else {
+
+            // stop the player
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
+
+        }
+
+    }    
+```
+
+Save the game and run it.  
 
 # To Be Continued
