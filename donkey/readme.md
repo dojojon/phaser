@@ -579,6 +579,6 @@ Coped below is the whole update function.  As you can see we have moved all the 
     }    
 ```
 
-Save the game and run it.  
+Save the game and run it.  The player will now stop on a collision.
 
 # To Be Continued
