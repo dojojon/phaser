@@ -744,4 +744,39 @@ Each time this code is run it will add 1 to the speed.  You can try other values
 speed = speed - 2.5;
 ```
 
+### Step 14
+
+Game is not a game without a score.  
+
+Add two variables to the top of our script.
+
+```
+    // Contains player score
+    var score = 0;
+
+    // Phaser text object for displaying score
+    var scoreText;
+```
+
+We are going to use Phasers text api to display the score.  Add the following to the bottom of the create ```function()```.  We always want the score displayed on screen so we set the fixedToCamera to true.
+
+```
+    // Set up score text
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
+    scoreText.fixedToCamera = true;
+    scoreText.text = 'Score: ' + score;
+```
+
+Now we can add code to increase the score variable and upadte the text we display.  Add the following to the top of the ```update()``` function to se the score text.
+
+```
+    scoreText.text = "Score: " + score;
+```
+
+We only want to increae the score if the player is playing.  Inside the ```if(playing)``` statement add the following.
+
+```
+    score++;
+```
+
 # To Be Continued
