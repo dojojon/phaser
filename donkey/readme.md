@@ -704,7 +704,7 @@ Add a call to this function in the ```collisionHandler()```.  We can pass throug
 
 Save the game and give it a test.
 
-### Set 12
+### Step 12
 
 Ok.  So we have a basic game, but it needs some tweaks to make it more enjoyable.  First lets move the car towards the bottom of the screen.  This will give the players more time to react to unicorns approaching.
 
@@ -727,8 +727,21 @@ In the ```update()``` function add the following line to set the camera to the p
 
 Save the game and give it a test.  The car should now be at the bottom of the screen.
 
+### Step 13
 
+Lets make the game get harder the loger it is played.  
 
+We can increase the speed in the ```update()``` function.  Remember our game negative speed moves the player up the road.
 
+```
+speed--;
+
+```
+
+Each time this code is run it will add 1 to the speed.  You can try other values using the following code.
+
+```
+speed = speed - 2.5;
+```
 
 # To Be Continued
