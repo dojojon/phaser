@@ -465,7 +465,7 @@ Save and run the game.  We now have unicorns!!!!
 
 ### Step 9 
 
-You may have noticed that we can drive through the unicorns.  This is not them plan.  Lets use the physics engine to detect it the car collides with a unicorn.  Don't worry they are maigical creatures and can easliy survive this.  As everyone know unicorns can disapper using rainbow magic so lets add some.
+You may have noticed that we can drive through the unicorns.  This is not them plan.  Lets use the physics engine to detect it the car collides with a unicorn.  Don't worry they are maigical creatures and can easliy survive this.  As everyone know unicorns can disappear using rainbow magic so lets add some.
 
 First we need to get the phaser physic engine to check for collisions between the player and the unicrons group.  Add the following to the top of the ```update()``` funciton.  Similar to the verges check, but this time we will call a function  ```collisionHandler``` when a collision is deteced.
 
@@ -580,5 +580,128 @@ Coped below is the whole update function.  As you can see we have moved all the 
 ```
 
 Save the game and run it.  The player will now stop on a collision.
+
+### Step 11
+
+Did I say rainbow magic.  Lets add some using phasers built in particle emitters.  Particles are a really easy way to add cool effects to your games.  Take a look at the examples [https://phaser.io/examples/v2/category/particles]
+
+First we need to add another asset.  In the ```preload()``` function add the following;
+
+```
+    game.load.image('rainbow', 'assets/rainbow.png');
+```
+
+Now lets add a function, that will take some coordinates as parameters and use a phaser emitter to make a bunch of rainbows.  This means when we call this function we can pass through a position for the effect to be drawn at.
+
+```
+    function rainbowExplode(posX, posY) {
+    }
+```
+
+Next we create an emitter for the rainbows.  
+
+```
+    function rainbowExplode(posX, posY) {
+   
+        // add a partical emitter
+        emitter = game.add.emitter(posX, posY, 200);
+
+        // make some particels
+        emitter.makeParticles('rainbow');
+    }
+```
+
+The emitter can change the properties of the sprites it uses.  Lets make rainbows of different sizes.
+
+```
+    function rainbowExplode(posX, posY) {
+        // add a partical emitter
+        emitter = game.add.emitter(posX, posY, 200);
+
+        // make some particels
+        emitter.makeParticles('rainbow');
+
+        // set the size range
+        emitter.minParticleScale = 1;
+        emitter.maxParticleScale = 3;
+    }
+```
+
+In a top down game we can set the gravity to zero. 
+
+```
+    function rainbowExplode(posX, posY) {
+        // add a partical emitter
+        emitter = game.add.emitter(posX, posY, 200);
+
+        // make some particels
+        emitter.makeParticles('rainbow');
+
+        // set the size range
+        emitter.minParticleScale = 1;
+        emitter.maxParticleScale = 3;
+
+        //turn off gravity
+        emitter.gravity = 0;
+
+    }
+```
+
+We want the rainbows to fade away in 3 seconds, we can do this by setting the alpha
+
+```
+    function rainbowExplode(posX, posY) {
+        // add a partical emitter
+        emitter = game.add.emitter(posX, posY, 200);
+
+        // make some particels
+        emitter.makeParticles('rainbow');
+
+        // set the size range
+        emitter.minParticleScale = 1;
+        emitter.maxParticleScale = 3;
+
+        //turn off gravity
+        emitter.gravity = 0;
+
+        emitter.setAlpha(1, 0, 3000);
+
+     
+    }
+```
+
+Last of all, we need to tell phaser to do the emit.
+
+```
+    function rainbowExplode(posX, posY) {
+        // add a partical emitter
+        emitter = game.add.emitter(posX, posY, 200);
+
+        // make some particels
+        emitter.makeParticles('rainbow');
+
+        // set the size range
+        emitter.minParticleScale = 1;
+        emitter.maxParticleScale = 3;
+
+        //turn off gravity
+        emitter.gravity = 0;
+
+        emitter.setAlpha(1, 0, 3000);
+
+        // emit all the particles, for 3 seconds, 
+        emitter.start(true, 3000, null, 50);
+    }
+```
+
+Add a call to this function in the ```collisionHandler()```.  We can pass through the players position, with a little offset to make explode happen at the front of the car.
+
+```
+    // Call the rainbow effect
+    rainbowExplode(player.position.x, player.position.y - 50);
+```
+
+
+Save the game and i
 
 # To Be Continued

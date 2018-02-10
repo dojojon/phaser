@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 1</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+
+        var player;
+        var road;
+        var speed = -200;
+        var cursors;
+        var verges;
+        var unicorns;
+        var playing = true;
+
+
+        function preload() {
+
+            // Load the game assets
+            game.load.image('road', 'assets/road.png');
+            game.load.image('unicorn', 'assets/unicorn.png');
+            game.load.image('car', 'assets/car.png');
+            game.load.image('pixel', 'assets/pixel.png');
+            game.load.image('clear_pixel', 'assets/transparent_pixel.png');
+            game.load.image('rainbow', 'assets/rainbow.png');
+
+        }
+
+        function create() {
+
+            // Enable arcade physics
+            game.physics.startSystem(Phaser.Physics.Arcade);
+
+            //Set up road
+            road = game.add.tileSprite(0, 0, 800, 20000, 'road');
+            game.world.setBounds(0, 0, 800, 20000);
+
+            // Create the player
+            player = game.add.sprite(game.world.centerX, game.world.height - 100, 'car');
+            player.anchor.setTo(0.5, 0.5);
+
+            // Set the camera to follow the player
+            game.camera.follow(player);
+
+            // Enable physics on the player
+            game.physics.arcade.enable(player);
+
+            // Create Verges
+            createVerges();
+
+            //Create Unicorns
+            createUnicorns();
+
+            // Set up the cursors to allow player to control car
+            cursors = game.input.keyboard.createCursorKeys();
+
+        }
+
+        function createVerges() {
+
+            verges = game.add.group();
+            verges.enableBody = true;
+            verges.physicsBodyType = Phaser.Physics.ARCADE;
+
+            var left = verges.create(0, 0, 'clear_pixel');
+            left.body.immovable = true;
+            left.scale.setTo(200, game.world.height);
+
+            var right = verges.create(600, 0, 'clear_pixel');
+            right.body.immovable = true;
+            right.scale.setTo(200, game.world.height);
+
+        }
+
+        function update() {
+
+            if (playing) {
+
+                // Player collides with verges
+                game.physics.arcade.collide(player, verges);
+
+                // Check to see if we have hit any unicorns
+                game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+
+                // Set the players speed
+                player.body.velocity.y = speed;
+
+                // Check to see if the player is holding down a cursor key.
+                player.body.velocity.x = 0;
+                if (cursors.right.isDown) {
+                    player.body.velocity.x = 250;
+                }
+                if (cursors.left.isDown) {
+                    player.body.velocity.x = -250;
+                }
+
+            }
+            else {
+                player.body.velocity.y = 0;
+                player.body.velocity.x = 0;
+            }
+
+        }
+
+        function createUnicorns() {
+
+            unicorns = game.add.group();
+            unicorns.enableBody = true;
+            unicorns.physicsBodyType = Phaser.Physics.ARCADE;
+
+            let posY = game.world.height;
+
+            // unicorn
+            for (var c = 0; c < 20; c++) {
+
+                //Set the next unicorn position
+                posY = posY - 750;
+
+                // Randomly position the unicorn 
+                const left = Phaser.Utils.chanceRoll(50);
+
+                let posX = 0;
+                if (left) {
+                    posX = game.world.centerX - 100;
+                } else {
+                    posX = game.world.centerX + 100;
+                }
+
+                // Create a unicorn
+                var unicorn = unicorns.create(posX, posY, 'unicorn');
+                unicorn.anchor.setTo(0.5, 0.5);
+
+            }
+        }
+
+        function collisionHandler(player, unicorn) {
+
+            // Kill the unicorn :-(
+            unicorn.kill();
+
+            // shake the screen and flash is white
+            game.camera.shake(0.01);
+            game.camera.flash();
+
+            //Set playing to false
+            playing = false;
+
+            // Call the rainbow effect
+            rainbowExplode(player.position.x, player.position.y - 50);
+
+        }
+
+        function rainbowExplode(posX, posY) {
+            // add a partical emitter
+            emitter = game.add.emitter(posX, posY, 200);
+
+            // make some particels
+            emitter.makeParticles('rainbow');
+
+            // set the size range
+            emitter.minParticleScale = 1;
+            emitter.maxParticleScale = 3;
+
+            //turn off gravity
+            emitter.gravity = 0;
+
+            emitter.setAlpha(1, 0, 3000);
+
+            // emit all the particles, for 3 seconds, 
+            emitter.start(true, 3000, null, 50);
+        }
+
+        function render() {
+            game.debug.spriteInfo(player, 32, 32);
+            game.debug.text("Speed " + speed, 32, 380);
+        }
+
+    </script>
+
+</body>
+
+</html>
