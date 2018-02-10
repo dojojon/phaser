@@ -177,4 +177,111 @@ We can also print some text to the screen.  Lets see if we can display the speed
     game.debug.text( "Speed " + speed , 100, 380 );
 ```
 
+### Step 7
+
+We want our card to remain on the road.  To do this we are going to create two invisible sprites to act as verges.  We can the use the Arcade Physics engine to keep the car on the road.
+
+Add another variable at the top of the code.  This will be used to reference a group containing the two verges.
+
+```
+        var verges;
+```
+
+We will need to use a new asset, add the following to the preload.
+
+```
+    game.load.image('pixel', 'assets/pixel.png');
+    game.load.image('clear_pixel', 'assets/transparent_pixel.png');
+```
+
+Next add a new function called ``` ``` under the ```create()``` function.  We could put the code directly into the create function, but it helps when working on a larger project to group common things together into functions, even if they are only going to be called from one place.
+
+```
+    function createVerges() {
+
+    }
+```
+
+We are going to create a group for the verges and enable physics for each sprite we put into it.
+
+```
+    function createVerges() {
+
+        verges = game.add.group();
+        verges.enableBody = true;
+        verges.physicsBodyType = Phaser.Physics.ARCADE;
+    }
+```
+
+Now create a sprite for the left side of the screen.  We want this sprite to not move when hit by the car, so we set the immovable property to true.  We need it to start at the top ```(0 ,0)``` corner of our world and stretch to the bottom of the world just before the road starts.  We will do this by changing its size using scale and setting it to 200 wide and the height of the world.
+
+```
+    function createVerges() {
+
+        verges = game.add.group();
+        verges.enableBody = true;
+        verges.physicsBodyType = Phaser.Physics.ARCADE;
+
+        var left = verges.create(0, 0, 'clear_pixel');
+        left.body.immovable = true;
+        left.scale.setTo(200, game.world.height);
+
+    }
+```
+
+Next add the right hand side.
+
+```
+    function createVerges() {
+
+        verges = game.add.group();
+        verges.enableBody = true;
+        verges.physicsBodyType = Phaser.Physics.ARCADE;
+
+        var left = verges.create(0, 0, 'clear_pixel');
+        left.body.immovable = true;
+        left.scale.setTo(200, game.world.height);
+
+        var right = verges.create(600, 0, 'clear_pixel');
+        right.body.immovable = true;
+        right.scale.setTo(200, game.world.height);
+
+    }
+```
+
+Your completed function should look like this.
+
+```
+    function createVerges() {
+
+        verges = game.add.group();
+        verges.enableBody = true;
+        verges.physicsBodyType = Phaser.Physics.ARCADE;
+
+        var left = verges.create(0, 0, 'clear_pixel');
+        left.body.immovable = true;
+        left.scale.setTo(200, game.world.height);
+
+        var right = verges.create(600, 0, 'clear_pixel');
+        right.body.immovable = true;
+        right.scale.setTo(200, game.world.height);
+
+    }
+```
+
+Now we need to call this function from the ```create()``` function.  You can call the function as follows.
+
+```
+    createVerges();
+```
+
+The last step is to tell the physics engine to check for collisions on each update.  Add the following to the update function.
+
+```
+    // Player collides with verges
+    game.physics.arcade.collide(player, verges);
+```
+
+Save and run the game. The card should now remain on the road.
+
 # To Be Continued
