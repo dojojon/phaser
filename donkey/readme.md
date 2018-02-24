@@ -787,7 +787,7 @@ We only want to increase the score if the player is playing.  Inside the ```if(p
     score++;
 ```
 
-### Step 14
+### Step 15
 
 Lets add a little more polish to the game, a title.  We are going to use a sprite and similar to the score lock this to the camera view.
 
@@ -819,7 +819,7 @@ We want the logo to be fixed to the camera and not the world.  So when the playe
 
 Save and run.  You should see a logo at the top of the screen.
 
-### Step 15
+### Step 16
 
 Lets improve the game over by adding another sprite.  This time we will add a tween (an animation) to it to make it more interesting.
 
@@ -866,7 +866,7 @@ Remember, we only want this displayed when the players game is over.  We can do 
 
 Save the game and run.  Test out the game over sprite is displayed when we collide.
 
-### Step 16
+### Step 17
 
 Now its time to add some sound.  Lets play a sound when the car collides with a unicorn.  Sounds follow a similar pattern to sprites, define variable, load them, create an effect etc,
 
@@ -898,7 +898,7 @@ You probably guessed it, we want to play this sound when we collide with a unico
 Save the file and play the game to test it out.
 
 
-###  Step 17
+###  Step 18
 
 Lots of games use music, so lets add some to our game by using an mp3 file.
 

@@ -29,7 +29,6 @@
         var scoreText;
         var logo;
         var gameoverlogo;
-        var boing;
 
         function preload() {
 
@@ -42,8 +41,6 @@
             game.load.image('rainbow', 'assets/rainbow.png');
             game.load.image('logo', 'assets/logo.png');
             game.load.image('game_over', 'assets/game_over.png');
-
-            game.load.audio('boing', ['assets/boing.wav']);
 
         }
 
@@ -90,10 +87,6 @@
 
             game.add.tween(gameoverlogo.scale).to({ x: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
             game.add.tween(gameoverlogo.scale).to({ y: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
-
-            // Load the boing
-            boing = game.add.audio('boing');
-            boing.loop = false;
 
         }
 
@@ -200,9 +193,6 @@
 
             // Show game over
             gameoverlogo.visible = true;
-
-            //Play sound effect
-            boing.play();
 
         }
 

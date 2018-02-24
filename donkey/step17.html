@@ -30,7 +30,6 @@
         var logo;
         var gameoverlogo;
         var boing;
-        var music;
 
         function preload() {
 
@@ -45,7 +44,6 @@
             game.load.image('game_over', 'assets/game_over.png');
 
             game.load.audio('boing', ['assets/boing.wav']);
-            game.load.audio('flutes', ['assets/tkucza-happyflutes.mp3']);
 
         }
 
@@ -96,12 +94,6 @@
             // Load the boing
             boing = game.add.audio('boing');
             boing.loop = false;
-
-            // Music
-            music = game.add.audio('flutes');
-            music.loop = true;
-            music.volume = 0.5;
-            music.play();
 
         }
 
