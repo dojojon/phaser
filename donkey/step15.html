@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Unicorn</title>
+    <title>Phaser - Making your first game, part 1</title>
     <script type="text/javascript" src="js/phaser.min.js"></script>
     <style type="text/css">
         body {
@@ -20,17 +20,15 @@
 
         var player;
         var road;
-        var unicorns;
         var speed = -200;
         var cursors;
         var verges;
+        var unicorns;
         var playing = true;
         var score = 0;
         var scoreText;
         var logo;
         var gameoverlogo;
-        var music;
-        var boing;
 
         function preload() {
 
@@ -41,40 +39,38 @@
             game.load.image('pixel', 'assets/pixel.png');
             game.load.image('clear_pixel', 'assets/transparent_pixel.png');
             game.load.image('rainbow', 'assets/rainbow.png');
-
             game.load.image('logo', 'assets/logo.png');
             game.load.image('game_over', 'assets/game_over.png');
 
-            game.load.audio('flutes', ['assets/tkucza-happyflutes.mp3']);
-            game.load.audio('boing', ['assets/boing.wav']);
         }
 
         function create() {
+
+            // Enable arcade physics
+            game.physics.startSystem(Phaser.Physics.Arcade);
 
             //Set up road
             road = game.add.tileSprite(0, 0, 800, 20000, 'road');
             game.world.setBounds(0, 0, 800, 20000);
 
-            // Enable arcade physics
-            game.physics.startSystem(Phaser.Physics.Arcade);
-
-            // Create Player
-            player = game.add.sprite(game.world.centerX + 100, game.world.height - 100, 'car');
+            // Create the player
+            player = game.add.sprite(game.world.centerX, game.world.height - 100, 'car');
             player.anchor.setTo(0.5, 0.5);
 
+            // Enable physics on the player
             game.physics.arcade.enable(player);
 
             // Create Verges
             createVerges();
 
-            // Create unicorns
+            //Create Unicorns
             createUnicorns();
 
             // Set up the cursors to allow player to control car
             cursors = game.input.keyboard.createCursorKeys();
 
             // Set up score text
-            scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '28px', fill: '#FFF' });
+            scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
             scoreText.fixedToCamera = true;
             scoreText.text = 'Score: ' + score;
 
@@ -92,16 +88,6 @@
             game.add.tween(gameoverlogo.scale).to({ x: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
             game.add.tween(gameoverlogo.scale).to({ y: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
-            // Music
-            music = game.add.audio('flutes');
-            music.loop = true;
-            music.volume = 0.5;
-            music.play();
-
-            // Boing sound 
-            boing = game.add.audio('boing');
-            boing.loop = false;
-
         }
 
         function createVerges() {
@@ -117,6 +103,45 @@
             var right = verges.create(600, 0, 'clear_pixel');
             right.body.immovable = true;
             right.scale.setTo(200, game.world.height);
+
+        }
+
+        function update() {
+
+            scoreText.text = "Score: " + score;
+
+            if (playing) {
+
+                // Player collides with verges
+                game.physics.arcade.collide(player, verges);
+
+                // Check to see if we have hit any unicorns
+                game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
+
+                // Set the camera position so car is at bottom of the screen
+                game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
+
+                // Set the players speed
+                player.body.velocity.y = speed;
+
+                // Check to see if the player is holding down a cursor key.
+                player.body.velocity.x = 0;
+                if (cursors.right.isDown) {
+                    player.body.velocity.x = 250;
+                }
+                if (cursors.left.isDown) {
+                    player.body.velocity.x = -250;
+                }
+
+                score++;
+
+            }
+            else {
+                player.body.velocity.y = 0;
+                player.body.velocity.x = 0;
+            }
+
+            speed = speed - 2;
 
         }
 
@@ -146,53 +171,9 @@
 
                 // Create a unicorn
                 var unicorn = unicorns.create(posX, posY, 'unicorn');
-                unicorn.scale.setTo(0.75, 0.75);
                 unicorn.anchor.setTo(0.5, 0.5);
 
             }
-        }
-
-        function update() {
-
-            scoreText.text = "Score: " + score;
-
-
-            if (playing) {
-
-                // Player collides with verges
-                game.physics.arcade.collide(player, verges);
-
-                // Set the camera position so car is at bottom of the screen
-                game.camera.focusOnXY(game.world.centerX, player.position.y - 200);
-
-                // Check to see if we have hit any unicorns
-                game.physics.arcade.overlap(unicorns, player, collisionHandler, null, this);
-
-                //Set the players speed
-                player.body.velocity.y = speed;
-
-                player.body.velocity.x = 0;
-                if (cursors.right.isDown) {
-                    player.body.velocity.x = 250;
-                }
-                if (cursors.left.isDown) {
-                    player.body.velocity.x = -250;
-                }
-
-                // Increase the player speed
-                speed = speed - 0.25;;
-
-                //Increase the score
-                score++;
-
-            } else {
-
-                // stop the player
-                player.body.velocity.x = 0;
-                player.body.velocity.y = 0;
-
-            }
-
         }
 
         function collisionHandler(player, unicorn) {
@@ -200,21 +181,18 @@
             // Kill the unicorn :-(
             unicorn.kill();
 
-            //Set playing flag to false
-            playing = false;
-
             // shake the screen and flash is white
             game.camera.shake(0.01);
             game.camera.flash();
+
+            //Set playing to false
+            playing = false;
 
             // Call the rainbow effect
             rainbowExplode(player.position.x, player.position.y - 50);
 
             // Show game over
             gameoverlogo.visible = true;
-
-            //Play sound effect
-            boing.play();
 
         }
 
@@ -239,7 +217,8 @@
         }
 
         function render() {
-            // game.debug.text("Score " + score, 32, 380);
+            // game.debug.spriteInfo(player, 32, 32);
+            // game.debug.text("Speed " + speed, 32, 380);
         }
 
     </script>

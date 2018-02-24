@@ -809,8 +809,55 @@ We want the logo to be fixed to the camera and not the world.  So when the playe
     logo.fixedToCamera = true;
 ```
 
-
 Save and run.  You should see a logo at the top of the screen.
+
+### Step 15
+
+Lets improve the game over by adding another sprite.  This time we will add a tween (an animation) to it to make it more interesting.
+
+Add a new variable at the top.
+
+```
+    var gameoverlogo;
+```
+
+We need to tell the phaser engine to load up the image. We do this by adding the following in the ```prelaod()``` function.
+
+```
+    game.load.image('game_over', 'assets/game_over.png');
+````
+
+You guess it, next we need to load an image in the ```create()``` function.  This looks almost the same as the logo code, but we are positioning it in the center of the screen.
+
+```
+    // Set up game over
+    gameoverlogo = game.add.sprite(game.camera.width / 2, game.camera.height / 2, 'game_over');
+    gameoverlogo.fixedToCamera = true;
+    gameoverlogo.anchor.setTo(0.5, 0.5);
+```
+
+We don't want the logo displayed until the player has crashed, so set the visibility flag to false.
+
+```
+    gameoverlogo.visible = false;
+```
+
+We can use phasers build in tweening function to change properties on the sprite over time.  The lines below change the scale (size) of the sprite from 1.0 to 1.05 and back every second.   If you want to find out more, check out he phaser documentation.  Add the following to the ```create()``` function.
+
+```
+    game.add.tween(gameoverlogo.scale).to({ x: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(gameoverlogo.scale).to({ y: 1.05 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
+```
+
+Remember, we only want this displayed when the players game is over.  We can do this in the ```collisionHander()``` fucntion that is called when we collide with a unicorn.
+
+```
+    gameoverlogo.visible = false;
+```
+
+Save the game and run.  Test out the game over sprite is displayed when we collide.
+
 
 
 # To Be Continued
