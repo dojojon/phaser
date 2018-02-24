@@ -4,7 +4,7 @@ In this tutorial we are going to make a simple game using Phaser.io base on [DON
 
 In our updated version we are replacing Donkies with Unicorns and will have different mechanics for the car.
 
-![Unicorns](/screenshots/Unicorn_Screen_Shot.png?raw=true "Unicrons!")
+![Unicorns](/donkey/screenshots/Unicorn_Screen_Shot.png?raw=true "Unicrons!")
 
 ## Pre Requisites
 
