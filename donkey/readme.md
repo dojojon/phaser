@@ -858,6 +858,36 @@ Remember, we only want this displayed when the players game is over.  We can do 
 
 Save the game and run.  Test out the game over sprite is displayed when we collide.
 
+### Step 16
+
+Now its time to add some sound.  Lets play a sound when the car collides with a unicorn.  Sounds follow a similar pattern to sprites, define variable, load them, create an effect etc,
+
+Add a variable at the top of the file.  
+
+```
+    var boing;
+```
+
+Next we need to load the sound effect.  Add the following to the ```preload()``` function.
+
+```
+    game.load.audio('boing', ['assets/boing.wav']);
+```
+
+And the same as images we need to to tell the phaser how to use then.  Add the following to the ```create()``` function.  We want the boing to be played only once, so we set loop to false.
+
+```
+    boing = game.add.audio('boing');
+    boing.loop = false;
+```
+
+You probably guessed it, we want to play this sound when we collide with a unicorn. We can do this in the ```collisionHander()``` fucntion by adding the following.
+
+```
+    boing.play();
+```
+
+Save the file and play the game to test it out.
 
 
 # To Be Continued
