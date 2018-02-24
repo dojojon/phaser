@@ -801,7 +801,7 @@ We need to tell the phaser engine to load up the image. We do this by adding the
 
 ```
     game.load.image('logo', 'assets/logo.png');
-````
+```
 
 Next we need to load an image in the ```create()``` function.  It positions it in center of the screen by dividing the camera width in 2 and 60 pixels from the top.
 
@@ -833,7 +833,7 @@ We need to tell the phaser engine to load up the image. We do this by adding the
 
 ```
     game.load.image('game_over', 'assets/game_over.png');
-````
+```
 
 You guess it, next we need to load an image in the ```create()``` function.  This looks almost the same as the logo code, but we are positioning it in the center of the screen.
 
@@ -889,7 +889,7 @@ And the same as images we need to to tell the phaser how to use then.  Add the f
     boing.loop = false;
 ```
 
-You probably guessed it, we want to play this sound when we collide with a unicorn. We can do this in the ```collisionHander()``` fucntion by adding the following.
+You probably guessed it, we want to play this sound when we collide with a unicorn. We can do this in the ```collisionHander()``` function by adding the following.
 
 ```
     boing.play();
