@@ -890,4 +890,27 @@ You probably guessed it, we want to play this sound when we collide with a unico
 Save the file and play the game to test it out.
 
 
-# To Be Continued
+###  Step 17
+
+Lots of games use music, so lets add some to our game by using an mp3 file.
+
+```
+    var music;
+```
+
+Next we need to load the mp3 effect.  Add the following to the ```preload()``` function.
+
+```
+    game.load.audio('flutes', ['assets/tkucza-happyflutes.mp3']);
+```
+
+ Add the following to the ```create()``` function.  We want the music to play in a loop, we will set the volume a little lower and start it off using the ```play()``` function.
+
+```
+    music = game.add.audio('flutes');
+    music.loop = true;
+    music.volume = 0.5;
+    music.play();
+```
+
+Save the game and test it out. 
