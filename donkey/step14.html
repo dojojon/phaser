@@ -27,6 +27,7 @@
         var playing = true;
         var score = 0;
         var scoreText;
+        var logo;
 
         function preload() {
 
@@ -37,6 +38,7 @@
             game.load.image('pixel', 'assets/pixel.png');
             game.load.image('clear_pixel', 'assets/transparent_pixel.png');
             game.load.image('rainbow', 'assets/rainbow.png');
+            game.load.image('logo', 'assets/logo.png');
 
         }
 
@@ -69,6 +71,11 @@
             scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
             scoreText.fixedToCamera = true;
             scoreText.text = 'Score: ' + score;
+
+            // Set up logo
+            logo = game.add.sprite(game.camera.width / 2, 60, 'logo');
+            logo.anchor.setTo(0.5, 0.5);
+            logo.fixedToCamera = true;
 
         }
 

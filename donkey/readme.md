@@ -729,7 +729,7 @@ Save the game and give it a test.  The car should now be at the bottom of the sc
 
 ### Step 13
 
-Lets make the game get harder the loger it is played.  
+Lets make the game get harder the longer it is played.  
 
 We can increase the speed in the ```update()``` function.  Remember our game negative speed moves the player up the road.
 
@@ -773,10 +773,44 @@ Now we can add code to increase the score variable and upadte the text we displa
     scoreText.text = "Score: " + score;
 ```
 
-We only want to increae the score if the player is playing.  Inside the ```if(playing)``` statement add the following.
+We only want to increase the score if the player is playing.  Inside the ```if(playing)``` statement add the following.
 
 ```
     score++;
 ```
+
+### Step 14
+
+Lets add a little more polish to the game, a title.  We are going to use a sprite and similar to the score lock this to the camera view.
+
+Add a new variable at the top.
+
+```
+    var logo;
+```
+
+We need to tell the phaser engine to load up the image. We do this by adding the following in the ```prelaod()``` function.
+
+```
+    game.load.image('logo', 'assets/logo.png');
+````
+
+Next we need to load an image in the ```create()``` function.  It positions it in center of the screen by dividing the camera width in 2 and 60 pixels from the top.
+
+```
+    // Set up logo
+    logo = game.add.sprite(game.camera.width / 2, 60, 'logo');
+    logo.anchor.setTo(0.5, 0.5);    
+```
+
+We want the logo to be fixed to the camera and not the world.  So when the player moves we can still see it.
+
+```
+    logo.fixedToCamera = true;
+```
+
+
+Save and run.  You should see a logo at the top of the screen.
+
 
 # To Be Continued
