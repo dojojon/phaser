@@ -11,7 +11,7 @@ IDE VS Code, Python3 for a web server.
 
 ## Steps
 
-All the assets for this tutorial along with the javascript library are in this directory.  Create you game file in this folder too.
+All the assets for this tutorial along with the javascript library are in this directory.  Create your game file in this folder as well.
 
 ###  Step 1
 
