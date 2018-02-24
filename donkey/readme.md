@@ -861,7 +861,7 @@ We can use phasers build in tweening function to change properties on the sprite
 Remember, we only want this displayed when the players game is over.  We can do this in the ```collisionHander()``` fucntion that is called when we collide with a unicorn.
 
 ```
-    gameoverlogo.visible = false;
+    gameoverlogo.visible = true;
 ```
 
 Save the game and run.  Test out the game over sprite is displayed when we collide.
