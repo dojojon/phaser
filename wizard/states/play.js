@@ -63,7 +63,6 @@ var playState = {
         else if (cursors.down.isDown) {
             this.player.body.velocity.setTo(0, playerSpeed);
             this.player.animations.play('down');
-
         }
 
         else if (cursors.left.isDown) {
