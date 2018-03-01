@@ -12,5 +12,6 @@ var bootState = {
 
         // Move onto load
         game.state.start('load');
+
     }
 }

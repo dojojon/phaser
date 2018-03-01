@@ -11,10 +11,14 @@ var loadState = {
         game.load.tilemap('test_map', 'assets/test_map.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('basic_tiles', 'assets/basictiles.png');
 
+        game.load.spritesheet('tiles', 'assets/basictiles.png', 16, 16);
+        game.load.spritesheet('things', 'assets/things.png', 16, 16);
+
+
     },
 
     create: function () {
 
-        game.state.start('menu');
+        game.state.start('play');
     }
 }
