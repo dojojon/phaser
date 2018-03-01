@@ -62,31 +62,42 @@ var playState = {
         this.map.setCollisionBetween(0, 7, true, this.mineLayer);
 
         // Create objects from the object layers
-        this.coinsGroup = this.fillGroup(69, 'tiles', 68, mapScale);
-        this.gemGroup = this.fillGroup(70, 'tiles', 69, mapScale);
+        this.coinsGroup = this.createObjectGroup();
+        this.fillGroup(69, 'tiles', 68, mapScale, this.coinsGroup);
 
-        this.blockingObjects = this.fillGroup(59, 'tiles', 58, mapScale); // rocks
-        // this.blockingObjects = this.fillGroup(55, 'tiles', 54, mapScale); // table
-        // this.blockingObjects = this.fillGroup(46, 'tiles', 45, mapScale);
-        // this.blockingObjects = this.fillGroup(54, 'tiles', 53, mapScale);
+        this.gemGroup = this.createObjectGroup();
+        this.fillGroup(70, 'tiles', 69, mapScale, this.gemGroup);
+
+        this.blockingObjects = this.createObjectGroup();
+        this.fillGroup(59, 'tiles', 58, mapScale, this.blockingObjects); // rocks
+        this.fillGroup(55, 'tiles', 54, mapScale, this.blockingObjects); // table
+        this.fillGroup(46, 'tiles', 45, mapScale, this.blockingObjects); // bed head
+        this.fillGroup(54, 'tiles', 53, mapScale, this.blockingObjects); // bed foot
+        this.fillGroup(40, 'tiles', 39, mapScale, this.blockingObjects); // column
+        this.fillGroup(32, 'tiles', 31, mapScale, this.blockingObjects); // well
+        this.fillGroup(48, 'tiles', 47, mapScale, this.blockingObjects); // statue
+        this.fillGroup(47, 'tiles', 46, mapScale, this.blockingObjects); // chair
 
         // Doors have an additional animation
-        this.doorsGroup = this.fillGroup(49, 'things', 1, mapScale);
+        this.doorsGroup = this.createObjectGroup();
+        this.fillGroup(49, 'things', 1, mapScale, this.doorsGroup);
         this.doorsGroup.callAll('animations.add', 'animations', 'open', [0, 12, 24, 36], 20, false);
-        this.doorsGroup.setAll('body.scale.y', mapScale * 2);
 
-        // Doors have an additional animation
-        this.chestsGroup = this.fillGroup(37, 'things', 6, mapScale);
+        // Chests have an additional animation
+        this.chestsGroup = this.createObjectGroup();
+        this.fillGroup(37, 'things', 6, mapScale, this.chestsGroup);
         this.chestsGroup.callAll('animations.add', 'animations', 'open', [6, 18, 30, 42], 20, false);
-
 
     },
 
-    fillGroup: function (id, spriteSheet, spriteID, mapScale) {
-
+    createObjectGroup: function () {
         const group = game.add.group();
         group.enableBody = true;
         group.immovable = true;
+        return group;
+    },
+
+    fillGroup: function (id, spriteSheet, spriteID, mapScale, group) {
 
         this.map.createFromObjects('Objects', id, spriteSheet, spriteID, true, false, group);
 
@@ -151,18 +162,22 @@ var playState = {
 
     render: function () {
 
-        if (1 == 1) {
+        if (1 == 2) {
 
             game.debug.body(this.player);
-            this.doorsGroup.forEach((door) => {
+            if (this.doorsGroup) {
+
+                this.doorsGroup.forEach((door) => {
 
 
-                if (door.isOpen) {
-                    game.debug.body(door, '#ff000088');
-                } else {
-                    game.debug.body(door, '#0000ff88');
-                }
-            });
+                    if (door.isOpen) {
+                        game.debug.body(door, '#ff000088');
+                    } else {
+                        game.debug.body(door, '#0000ff88');
+                    }
+                });
+            }
+
         }
     }
 }               
