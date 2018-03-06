@@ -1,52 +1,36 @@
 
 
-class Player extends Phaser.Sprite {
-    constructor(game) {
-        super(game);
-    }
-}
+export class Play extends Phaser.State {
 
-var playState = {
-
-    map: {},
-    player: {},
-    weapon: {},
-    mineLayer: {},
-    coinsGroup: {},
-    gemGroup: {},
-    doorsGroup: {},
-    chestsGroup: {},
-    blockingObjects: {},
-
-    preload: function () {
+    preload() {
 
         console.log('play');
-        var loadingMessage = game.add.text(80, 150, "Playing....", { font: '30px Courier', fill: '#ff0000' });
-    },
+        var loadingMessage = this.game.add.text(80, 150, "Playing....", { font: '30px Courier', fill: '#ff0000' });
+    }
 
-    create: function () {
-        game.camera.roundPx = true;
+    create() {
+        this.game.camera.roundPx = true;
 
         this.createMap();
         this.createPlayer();
 
-    },
+    }
 
-    createPlayer: function () {
+    createPlayer() {
 
         // Create Player
-        this.player = game.add.sprite(100, 100, 'player_m');
+        this.player = this.game.add.sprite(100, 100, 'player_m');
         this.player.scale.setTo(1.6, 1.8);
         this.player.anchor.setTo(0.5, 0.5);
 
-        this.weapon = game.add.sprite(0, 0, 'player_m', );
+        this.weapon = this.game.add.sprite(0, 0, 'player_m', );
         this.weapon.anchor.setTo(0.5, 0.5);
         this.weapon.scale.setTo(1, 1);
         this.weapon.frame = 25;
         this.weapon.visible = false;
         this.player.addChild(this.weapon);
 
-        game.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 
         this.player.animations.add('down', [1, 2], 10, true);
         this.player.animations.add('left', [7, 8], 10, true);
@@ -58,22 +42,22 @@ var playState = {
         this.player.animations.add('right_strike', [16], 10, true);
         this.player.animations.add('up_strike', [22], 10, true);
 
-        this.player.animations.add('stand', [0], 10, true);
+        this.player.animations.add('stand', [2], 10, true);
         this.player.animations.play('stand');
         this.player.body.collideWorldBounds = true;
 
 
-        cursors = game.input.keyboard.createCursorKeys();
-        hitKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.hitKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
 
-        game.camera.follow(this.player);
+        this.game.camera.follow(this.player);
 
-        playerSpeed = 100;
-    },
+        this.playerSpeed = 100;
+    }
 
-    createMap: function () {
+    createMap() {
         const mapScale = 2;
-        this.map = game.add.tilemap('test_map');
+        this.map = this.game.add.tilemap('test_map');
         this.map.addTilesetImage('basic', 'basic_tiles');
 
         this.mineLayer = this.map.createLayer('Mine');
@@ -111,16 +95,16 @@ var playState = {
         this.fillGroup(37, 'things', 6, mapScale, this.chestsGroup);
         this.chestsGroup.callAll('animations.add', 'animations', 'open', [6, 18, 30, 42], 20, false);
 
-    },
+    }
 
-    createObjectGroup: function () {
-        const group = game.add.group();
+    createObjectGroup() {
+        const group = this.game.add.group();
         group.enableBody = true;
         group.immovable = true;
         return group;
-    },
+    }
 
-    fillGroup: function (id, spriteSheet, spriteID, mapScale, group) {
+    fillGroup(id, spriteSheet, spriteID, mapScale, group) {
 
         this.map.createFromObjects('Objects', id, spriteSheet, spriteID, true, false, group);
 
@@ -131,89 +115,90 @@ var playState = {
 
         return group;
 
-    },
+    }
 
-    doorCheck: function (player, door) {
+    doorCheck(player, door) {
         if (!door.isOpen) {
             door.animations.play('open');
             door.isOpen = true;
             door.body.enable = false;
         }
-    },
+    }
 
-    chestCheck: function (player, chest) {
+    chestCheck(player, chest) {
         if (!chest.isOpen) {
             chest.animations.play('open');
             chest.isOpen = true;
         }
-    },
+    }
 
-    update: function () {
+    update() {
 
-        game.physics.arcade.collide(this.player, this.mineLayer);
-        game.physics.arcade.collide(this.player, this.coinsGroup);
-        game.physics.arcade.collide(this.player, this.gemGroup);
-        game.physics.arcade.collide(this.player, this.blockingObjects);
-        game.physics.arcade.collide(this.player, this.doorsGroup, this.doorCheck);
-        game.physics.arcade.collide(this.player, this.chestsGroup, this.chestCheck);
+        this.game.physics.arcade.collide(this.player, this.mineLayer);
+        this.game.physics.arcade.collide(this.player, this.coinsGroup);
+        this.game.physics.arcade.collide(this.player, this.gemGroup);
+        this.game.physics.arcade.collide(this.player, this.blockingObjects);
+        this.game.physics.arcade.collide(this.player, this.doorsGroup, this.doorCheck);
+        this.game.physics.arcade.collide(this.player, this.chestsGroup, this.chestCheck);
 
         this.player.body.velocity.setTo(0, 0);
 
-        const hitKeyPressed = hitKey.isDown;
+        const hitKeyPressed = this.hitKey.isDown;
 
         if (hitKeyPressed) {
 
             this.weapon.visible = true;
-            game.world.bringToTop(this.player);
-            game.world.bringToTop(this.weapon);
-            if (cursors.left.isDown) {
+            this.game.world.bringToTop(this.player);
+            this.game.world.bringToTop(this.weapon);
+            if (this.cursors.left.isDown) {
                 this.player.animations.play('left_strike');
                 this.weapon.position.setTo(-13, 2);
                 this.weapon.angle = -90;
             }
-            else if (cursors.right.isDown) {
+            else if (this.cursors.right.isDown) {
                 this.player.animations.play('right_strike');
                 this.weapon.position.setTo(13, 2);
                 this.weapon.angle = 90;
             }
-            else if (cursors.up.isDown) {
+            else if (this.cursors.up.isDown) {
                 this.player.animations.play('up_strike');
                 this.weapon.position.setTo(4, -12);
                 this.weapon.z = -10;
                 this.weapon.angle = 0;
 
-                game.world.moveDown(this.weapon);
-                game.world.moveUp(this.player);
+                this.game.world.moveDown(this.weapon);
+                this.game.world.moveUp(this.player);
             }
-            else if (cursors.down.isDown) {
+            else {
+                // if (this.cursors.down.isDown) {
                 this.player.animations.play('down_strike');
                 this.weapon.position.setTo(3, 12);
 
                 this.weapon.angle = 180;
 
-            } else {
-                this.player.animations.play('stand');
+                // } else {
+                //     this.player.animations.play('stand');
             }
 
         } else {
 
             this.weapon.visible = false;
 
-            if (cursors.left.isDown) {
-                this.player.body.velocity.setTo(-playerSpeed, 0);
+            if (this.cursors.left.isDown) {
+                this.player.body.velocity.setTo(-this.playerSpeed, 0);
                 this.player.animations.play('left');
             }
-            else if (cursors.right.isDown) {
-                this.player.body.velocity.setTo(playerSpeed, 0);
+            else if (this.cursors.right.isDown) {
+                this.player.body.velocity.setTo(this.playerSpeed, 0);
                 this.player.animations.play('right');
             }
-            else if (cursors.up.isDown) {
-                this.player.body.velocity.setTo(0, -playerSpeed);
+            else if (this.cursors.up.isDown) {
+                this.player.body.velocity.setTo(0, -this.playerSpeed);
                 this.player.animations.play('up');
 
             }
-            else if (cursors.down.isDown) {
-                this.player.body.velocity.setTo(0, playerSpeed);
+            else if (this.cursors.down.isDown) {
+                this.player.body.velocity.setTo(0, this.playerSpeed);
                 this.player.animations.play('down');
             } else {
                 this.player.animations.play('stand');
@@ -222,25 +207,26 @@ var playState = {
         }
 
 
-    },
+    }
 
-    render: function () {
+    render() {
 
         if (1 == 2) {
 
-            game.debug.body(this.player);
+            this.game.debug.body(this.player);
             if (this.doorsGroup) {
 
                 this.doorsGroup.forEach((door) => {
 
                     if (door.isOpen) {
-                        game.debug.body(door, '#ff000088');
+                        this.game.debug.body(door, '#ff000088');
                     } else {
-                        game.debug.body(door, '#0000ff88');
+                        this.game.debug.body(door, '#0000ff88');
                     }
                 });
             }
 
         }
     }
-}                   
+
+}

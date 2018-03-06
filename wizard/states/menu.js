@@ -1,6 +1,7 @@
-var menuState = {
 
-    preload: function () {
+export class Menu extends Phaser.State {
+
+    create() {
 
         console.log('menu');
 
@@ -13,9 +14,14 @@ var menuState = {
         var pressToStart = game.add.text(menuLeft, game.camera.height - 100, "Press 'S' to start.", menuFont);
         var startKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
         startKey.onDown.addOnce(this.start, this);
-    },
+    }
 
-    start: function () {
+    update() {
+
+    }
+
+    start() {
         game.state.start('play');
     }
-}   
+
+}
