@@ -1,11 +1,22 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
+import { Boot } from '/states/boot.js';
+import { Load } from '/states/load.js';
+import { Menu } from '/states/menu.js';
+import { Play } from '/states/play.js';
 
+class Game extends Phaser.Game {
 
-// Add States
-game.state.add('boot', bootState);
-game.state.add('load', loadState);
-game.state.add('menu', menuState);
-game.state.add('play', playState);
-// game.state.add('gameover', gameOverState);
+    constructor() {
 
-game.state.start('boot');
+        super(800, 600, Phaser.AUTO, 'gameDiv');
+
+        this.state.add('boot', Boot, false);
+        this.state.add('load', Load, false);
+        this.state.add('menu', Menu, false);
+        this.state.add('play', Play, false);
+
+        this.state.start('boot');
+    }
+
+}
+
+new Game();
