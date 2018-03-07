@@ -2,13 +2,8 @@ import { Player } from '../objects/player.js';
 
 export class Play extends Phaser.State {
 
-    preload() {
-
-        console.log('play');
-        var loadingMessage = this.game.add.text(80, 150, "Playing....", { font: '30px Courier', fill: '#ff0000' });
-    }
-
     create() {
+
         this.game.camera.roundPx = true;
 
         this.createMap();
@@ -95,7 +90,6 @@ export class Play extends Phaser.State {
     }
 
     update() {
-
 
         this.game.physics.arcade.collide(this.player, this.mineLayer);
         this.game.physics.arcade.collide(this.player, this.coinsGroup);
