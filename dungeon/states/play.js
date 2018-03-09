@@ -52,34 +52,13 @@ export class Play extends Phaser.State {
         // Chests have an additional animation
         this.chestsGroup = new ChestGroup(this.game, this.map);;
 
-
     }
 
     createObjectGroup() {
 
         return new MapGroup(this.game, this.map);
-        // const group = this.game.add.group();
-        // group.enableBody = true;
-        // group.immovable = true;
-        // return group;
+
     }
-
-    // fillGroup(id, spriteSheet, spriteID,  group) {
-
-    //     this.map.createFromObjects('Objects', id, spriteSheet, spriteID, true, false, group);
-
-    //     group.setAll('body.immovable', true);
-    //     group.setAll('enableBody', true);
-    //     group.scale.set( this.mapScale);
-    //     group.forEach(function (sprite) { sprite.body.setSize(sprite.width * group.scale.x, sprite.height * group.scale.y) })
-
-    //     return group;
-
-    // }
-
-
-
-
 
     update() {
 
