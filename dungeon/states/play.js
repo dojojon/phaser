@@ -1,3 +1,5 @@
+import { ChestGroup } from '../objects/chest-group.js';
+import { DoorGroup } from '../objects/door-group.js';
 import { MAPSCALE } from '../settings.js';
 import { MapGroup } from '../objects/map-group.js';
 import { Player } from '../objects/player.js';
@@ -45,14 +47,11 @@ export class Play extends Phaser.State {
         this.blockingObjects.fillGroup(47, 'tiles', 46); // chair
 
         // Doors have an additional animation
-        this.doorsGroup = this.createObjectGroup();
-        this.doorsGroup.fillGroup(49, 'things', 1);
-        // this.doorsGroup.callAll('animations.add', 'animations', 'open', [0, 12, 24, 36], 20, false);
+        this.doorsGroup = new DoorGroup(this.game, this.map);
 
         // Chests have an additional animation
-        this.chestsGroup = this.createObjectGroup();
-        this.chestsGroup.fillGroup(37, 'things', 6);
-        // this.chestsGroup.callAll('animations.add', 'animations', 'open', [6, 18, 30, 42], 20, false);
+        this.chestsGroup = new ChestGroup(this.game, this.map);;
+
 
     }
 
@@ -78,29 +77,19 @@ export class Play extends Phaser.State {
 
     // }
 
-    doorCheck(player, door) {
-        if (!door.isOpen) {
-            door.animations.play('open');
-            door.isOpen = true;
-            door.body.enable = false;
-        }
-    }
 
-    chestCheck(player, chest) {
-        if (!chest.isOpen) {
-            chest.animations.play('open');
-            chest.isOpen = true;
-        }
-    }
+
+
 
     update() {
 
         this.game.physics.arcade.collide(this.player, this.mineLayer);
-        this.game.physics.arcade.collide(this.player, this.coinsGroup);
-        this.game.physics.arcade.collide(this.player, this.gemGroup);
-        this.game.physics.arcade.collide(this.player, );
-        this.game.physics.arcade.collide(this.player, this.doorsGroup, this.doorCheck);
-        this.game.physics.arcade.collide(this.player, this.chestsGroup, this.chestCheck);
+
+        this.game.physics.arcade.collide(this.player, this.coinsGroup, this.chestsGroup.collide);
+        this.game.physics.arcade.collide(this.player, this.gemGroup, this.chestsGroup.collide);
+        this.game.physics.arcade.collide(this.player, this.blockingObjects, this.blockingObjects.collide);
+        this.game.physics.arcade.collide(this.player, this.doorsGroup, this.doorsGroup.collide);
+        this.game.physics.arcade.collide(this.player, this.chestsGroup, this.chestsGroup.collide);
 
         this.player.update();
 
