@@ -64,8 +64,8 @@ export class Play extends Phaser.State {
 
         this.game.physics.arcade.collide(this.player, this.mineLayer);
 
-        this.game.physics.arcade.collide(this.player, this.coinsGroup, this.chestsGroup.collide);
-        this.game.physics.arcade.collide(this.player, this.gemGroup, this.chestsGroup.collide);
+        this.game.physics.arcade.collide(this.player, this.coinsGroup, this.coinsGroup.collide);
+        this.game.physics.arcade.collide(this.player, this.gemGroup, this.gemGroup.collide);
         this.game.physics.arcade.collide(this.player, this.blockingObjects, this.blockingObjects.collide);
         this.game.physics.arcade.collide(this.player, this.doorsGroup, this.doorsGroup.collide);
         this.game.physics.arcade.collide(this.player, this.chestsGroup, this.chestsGroup.collide);

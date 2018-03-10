@@ -16,12 +16,25 @@ export class ChestGroup extends MapGroup {
 
     }
 
-    collide(player, chest) {
+    collide(playerSprite, chest) {
 
-        super.collide(player, chest);
+        super.collide(playerSprite, chest);
+
         if (!chest.isOpen) {
             chest.animations.play('open');
             chest.isOpen = true;
+
+            if (chest.inventory) {
+                console.debug('Inventory', chest.inventory);
+                const parsed = JSON.parse(chest.inventory);
+
+                const player = playerSprite.parent;
+                playerSprite.parent.addInventory(parsed);
+
+            } else {
+                console.debug('No Inventory');
+            }
+
         }
 
     }

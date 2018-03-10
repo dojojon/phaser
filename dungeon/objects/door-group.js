@@ -17,13 +17,19 @@ export class DoorGroup extends MapGroup {
 
     }
 
-    collide(player, door) {
+    collide(playerSprite, door) {
 
-        super.collide(player, door);
+        super.collide(playerSprite, door);
 
-        if (!door.isOpen) {
+        const player = playerSprite.parent;
+
+        console.debug('Key Required', door.key);
+        const hasKey = player.hasKey(door.key);
+        console.debug('hasKey', hasKey);
+
+        if (door.locked && hasKey) {
             door.animations.play('open');
-            door.isOpen = true;
+            door.locked = false;
             door.body.enable = false;
         }
 

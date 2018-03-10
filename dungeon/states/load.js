@@ -25,11 +25,15 @@ export class Load extends Phaser.State {
         // Tile map tiles
         this.game.load.image('basic_tiles', 'assets/basictiles.png');
 
-        //  Sprite sheet of the tiles
+        // Sprite sheet of the tiles
         this.game.load.spritesheet('tiles', 'assets/basictiles.png', 16, 16);
 
-        //Sprite sheet of things
+        // Sprite sheet of things
         this.game.load.spritesheet('things', 'assets/things.png', 16, 16);
+
+        // Sprite sheet of keys
+        this.game.load.spritesheet('keys', 'assets/keys.png', 16, 16);
+
     }
 
     create() {

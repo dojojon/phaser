@@ -3,9 +3,15 @@ import { GameObject } from './game-object.js';
 //** Player Game Object */
 export class Player extends GameObject {
 
+
+
     constructor(game, x, y) {
 
         super(game);
+
+        // Set player attributes 
+        this.hasWeapon = false;
+        this.inventory = [];
 
         // Enable physics
         this.enableBody = true;
@@ -79,7 +85,7 @@ export class Player extends GameObject {
         }
 
         // hit Key pressed, then set up the weapon
-        if (this.hitKey.isDown) {
+        if (this.hitKey.isDown && this.hasWeapon) {
 
             this.player.body.velocity.setTo(0, 0);
 
@@ -123,5 +129,46 @@ export class Player extends GameObject {
         this.weapon.position.setTo(x, y);
     }
 
+    /** Add inventory items */
+    addInventory(items) {
+
+        if (Array.isArray(items)) {
+            items.forEach((item) => this.processItem(item));
+        } else {
+            this.processItem(items);
+        }
+
+    }
+
+    processItem(item) {
+
+        switch (item) {
+            case 'sword':
+                this.hasWeapon = true;
+                break;
+            case 'gem':
+                this.gems++;
+                break;
+            case 'coins':
+                this.coins++;
+                break;
+            case 'key_blue':
+            case 'key_red':
+            case 'key_green':
+            case 'key_gold':
+                this.inventory.push(item);
+                break;
+            default:
+                console.error('Inventory item not found', item);
+                break;
+        }
+
+    }
+
+    hasKey(lock) {
+        console.debug('Check lock', lock, this.inventory);
+        const keyRequired = 'key_' + lock;
+        return this.inventory.includes(keyRequired);
+    }
 }
 
