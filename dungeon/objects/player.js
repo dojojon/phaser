@@ -27,7 +27,7 @@ export class Player extends GameObject {
         this.game.camera.follow(this.player);
 
         // Create sword
-        this.weapon = this.game.add.sprite(0, 0, 'player_m', );
+        this.weapon = this.game.add.sprite(0, 0, 'player_m');
         this.weapon.anchor.setTo(0.5, 0.5);
         this.weapon.scale.setTo(1.6, 1.8);
         this.weapon.frame = 25;

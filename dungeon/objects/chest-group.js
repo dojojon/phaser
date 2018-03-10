@@ -25,6 +25,7 @@ export class ChestGroup extends MapGroup {
             chest.isOpen = true;
 
             if (chest.inventory) {
+
                 console.debug('Inventory', chest.inventory);
                 const parsed = JSON.parse(chest.inventory);
 
@@ -32,7 +33,7 @@ export class ChestGroup extends MapGroup {
                 playerSprite.parent.addInventory(parsed);
 
             } else {
-                console.debug('No Inventory');
+                console.debug('No Items');
             }
 
         }

@@ -3,6 +3,7 @@ import { DoorGroup } from '../objects/door-group.js';
 import { MAPSCALE } from '../settings.js';
 import { MapGroup } from '../objects/map-group.js';
 import { Player } from '../objects/player.js';
+import { HeadsUpDisplay } from '../ui/heads-up-display.js';
 
 export class Play extends Phaser.State {
 
@@ -11,11 +12,16 @@ export class Play extends Phaser.State {
         this.game.camera.roundPx = true;
 
         this.createMap();
+
         this.player = new Player(this.game, 100, 100);
+
+        this.headUpDisplay = new HeadsUpDisplay(this.game, this.player);
+
 
     }
 
     createMap() {
+
         this.mapScale = MAPSCALE;
 
         this.map = this.game.add.tilemap('test_map');
