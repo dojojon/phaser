@@ -1,8 +1,9 @@
-import { GameObject } from './game-object.js';
+import {
+    GameObject
+} from './game-object.js';
 
 //** Player Game Object */
 export class Player extends GameObject {
-
 
 
     constructor(game, x, y) {
@@ -66,17 +67,14 @@ export class Player extends GameObject {
         if (this.cursors.left.isDown) {
             this.player.body.velocity.setTo(-this.playerSpeed, 0);
             this.player.animations.play('left');
-        }
-        else if (this.cursors.right.isDown) {
+        } else if (this.cursors.right.isDown) {
             this.player.body.velocity.setTo(this.playerSpeed, 0);
             this.player.animations.play('right');
-        }
-        else if (this.cursors.up.isDown) {
+        } else if (this.cursors.up.isDown) {
             this.player.body.velocity.setTo(0, -this.playerSpeed);
             this.player.animations.play('up');
 
-        }
-        else if (this.cursors.down.isDown) {
+        } else if (this.cursors.down.isDown) {
             this.player.body.velocity.setTo(0, this.playerSpeed);
             this.player.animations.play('down');
         } else {
@@ -95,13 +93,11 @@ export class Player extends GameObject {
                 this.player.animations.play('left_strike');
                 this.setWeaponPostion(-22, 3);
                 this.weapon.angle = -90;
-            }
-            else if (this.cursors.right.isDown) {
+            } else if (this.cursors.right.isDown) {
                 this.player.animations.play('right_strike');
                 this.setWeaponPostion(22, 3);
                 this.weapon.angle = 90;
-            }
-            else if (this.cursors.up.isDown) {
+            } else if (this.cursors.up.isDown) {
 
                 this.player.animations.play('up_strike');
                 this.setWeaponPostion(-4, -23);
@@ -110,8 +106,7 @@ export class Player extends GameObject {
                 // Flip the order, by removing and adding back to the group
                 this.remove(this.player);
                 this.add(this.player);
-            }
-            else {
+            } else {
 
                 this.player.animations.play('down_strike');
                 this.setWeaponPostion(5, 23);
@@ -171,4 +166,3 @@ export class Player extends GameObject {
         return this.inventory.includes(keyRequired);
     }
 }
-
