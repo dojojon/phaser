@@ -2,6 +2,7 @@ import { ChestGroup } from './chest-group.js';
 import { DoorGroup } from './door-group.js';
 import { MAPSCALE } from '../settings.js';
 import { MapGroup } from './map-group.js';
+import { MonsterGroup } from './monster-group.js';
 
 export class Map {
 
@@ -37,6 +38,11 @@ export class Map {
         this.blockingObjects.fillGroup(48, 'tiles', 47); // statue
         this.blockingObjects.fillGroup(47, 'tiles', 46); // chair
 
+        //Monster group
+        this.monsterGroup = new MonsterGroup(this.game, this.map);
+        this.monsterGroup.fillGroup(49, 'charaters', 48);
+        this.monsterGroup.fillGroup(49, 'charaters', 48);
+
         // Doors have an additional animation
         this.doorsGroup = new DoorGroup(this.game, this.map);
 
@@ -60,6 +66,7 @@ export class Map {
         this.game.physics.arcade.collide(player, this.blockingObjects, this.blockingObjects.collide);
         this.game.physics.arcade.collide(player, this.doorsGroup, this.doorsGroup.collide);
         this.game.physics.arcade.collide(player, this.chestsGroup, this.chestsGroup.collide);
+        this.game.physics.arcade.collide(player, this.monsterGroup, this.monsterGroup.collide);
 
     }
 }
