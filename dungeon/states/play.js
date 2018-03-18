@@ -2,6 +2,7 @@
 import { Player } from '../objects/player.js';
 import { Map } from '../objects/map.js';
 import { HeadsUpDisplay } from '../ui/heads-up-display.js';
+import { HealthBar } from '../ui/health-bar.js';
 
 export class Play extends Phaser.State {
 
@@ -9,21 +10,23 @@ export class Play extends Phaser.State {
 
         this.game.camera.roundPx = true;
 
-        this.map = new Map(this.game, this.player);
+        this.map = new Map(this.game);
 
         this.player = new Player(this.game, 100, 100);
 
         this.game.player = this.player;
 
-        this.headUpDisplay = new HeadsUpDisplay(this.game, this.player);
+        this.headUpDisplay = new HeadsUpDisplay(this.game);
+        this.healthBar = new HealthBar(this.game);
 
     }
 
     update() {
 
-        this.map.update(this.player);
-
-        this.player.update();
+        // Check to see if the player is alive, if not change state
+        if (this.player.health < 1) {
+            this.game.state.start('menu');
+        }
 
     }
 

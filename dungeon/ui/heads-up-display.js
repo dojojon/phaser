@@ -1,12 +1,13 @@
 
 const FADE_ITEM_ALPHA = 0.3;
+
 export class HeadsUpDisplay extends Phaser.Group {
 
-    constructor(game, player) {
+    constructor(game) {
 
         super(game);
 
-        this.player = player;
+        this.player = game.player;
 
         this.key_gold = this.createKey(0);
         this.key_red = this.createKey(1);
@@ -26,6 +27,7 @@ export class HeadsUpDisplay extends Phaser.Group {
         key.alpha = FADE_ITEM_ALPHA;
         key.fixedToCamera = true;
         key.scale.setTo(2, 2);
+        this.add(key);
         return key;
     }
 

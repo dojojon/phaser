@@ -13,6 +13,7 @@ export class Player extends GameObject {
         // Set player attributes 
         this.hasWeapon = false;
         this.inventory = [];
+        this.health = 100;
 
         // Enable physics
         this.enableBody = true;
@@ -161,7 +162,6 @@ export class Player extends GameObject {
     }
 
     hasKey(lock) {
-        console.debug('Check lock', lock, this.inventory);
         const keyRequired = 'key_' + lock;
         return this.inventory.includes(keyRequired);
     }

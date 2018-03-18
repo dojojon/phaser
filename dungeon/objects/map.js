@@ -3,12 +3,13 @@ import { DoorGroup } from './door-group.js';
 import { MAPSCALE } from '../settings.js';
 import { MapGroup } from './map-group.js';
 import { MonsterGroup } from './monster-group.js';
+import { GameObject } from './game-object.js';
 
-export class Map {
+export class Map extends GameObject {
 
     constructor(game) {
 
-        this.game = game;
+        super(game);
 
         this.map = this.game.add.tilemap('test_map');
         this.map.addTilesetImage('basic', 'basic_tiles');
@@ -55,22 +56,25 @@ export class Map {
 
     }
 
-    update(player) {
+    update() {
+
+        console.log('Map Update');
 
         // Check to see if the player hits the mine layer
-        this.game.physics.arcade.collide(player, this.mineLayer);
+        this.game.physics.arcade.collide(this.game.player, this.mineLayer);
 
         // Player collides with coins and gems
-        this.game.physics.arcade.collide(player, this.coinsGroup, this.coinsGroup.collide);
-        this.game.physics.arcade.collide(player, this.gemGroup, this.gemGroup.collide);
+        this.game.physics.arcade.collide(this.game.player, this.coinsGroup, this.coinsGroup.collide);
+        this.game.physics.arcade.collide(this.game.player, this.gemGroup, this.gemGroup.collide);
 
         // Player collides with blocking objects, doors and chests
-        this.game.physics.arcade.collide(player, this.blockingObjects, this.blockingObjects.collide);
-        this.game.physics.arcade.collide(player, this.doorsGroup, this.doorsGroup.collide);
-        this.game.physics.arcade.collide(player, this.chestsGroup, this.chestsGroup.collide);
+        this.game.physics.arcade.collide(this.game.player, this.blockingObjects, this.blockingObjects.collide);
+        this.game.physics.arcade.collide(this.game.player, this.doorsGroup, this.doorsGroup.collide);
+        this.game.physics.arcade.collide(this.game.player, this.chestsGroup, this.chestsGroup.collide);
 
         // Monster collisions
         this.game.physics.arcade.collide(this.monsterGroup, this.monsterGroup);
+        this.game.physics.arcade.collide(this.game.player, this.monsterGroup, this.monsterGroup.collide);
 
         this.game.physics.arcade.collide(this.monsterGroup, this.mineLayer);
         this.game.physics.arcade.collide(this.monsterGroup, this.blockingObjects);

@@ -14,10 +14,10 @@ export class Load extends Phaser.State {
         this.game.load.spritesheet('player_m', 'assets/Tiny16-ExpandedMaleSprites.png', 16, 16);
 
         // Female Player
-        // this.game.load.spritesheet('player_f', 'assets/Tiny16-ExpandedFemaleSprites.png', 16, 16);
+        this.game.load.spritesheet('player_f', 'assets/Tiny16-ExpandedFemaleSprites.png', 16, 16);
 
         // Skeleton
-        // this.game.load.spritesheet('skeleton', 'assets/Tiny16-ExpandedSkeletonSprites.png', 16, 16);
+        this.game.load.spritesheet('skeleton', 'assets/Tiny16-ExpandedSkeletonSprites.png', 16, 16);
 
         // Tile map data
         this.game.load.tilemap('test_map', 'assets/test_map.json', null, Phaser.Tilemap.TILED_JSON);
@@ -33,6 +33,9 @@ export class Load extends Phaser.State {
 
         // Sprite sheet of keys
         this.game.load.spritesheet('keys', 'assets/keys.png', 16, 16);
+
+        // Health Bar
+        this.game.load.spritesheet('health_bar', 'assets/red-cherry-lifebar.png', 28, 8);
 
     }
 

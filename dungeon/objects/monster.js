@@ -67,15 +67,13 @@ export class Monster extends Phaser.Sprite {
 
         }
 
-        // this.game.debug.spriteInfo(this, 32, 32);
-        this.game.debug.spriteCoords(this, 32, 80);
-
     }
 
 
     collide(monster, object) {
 
         console.log('monster hit', this.body.blocked);
+        this.game.player.health = this.game.player.health - 10;
 
     }
 

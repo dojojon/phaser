@@ -27,7 +27,8 @@ export class MonsterGroup extends MapGroup {
 
     }
 
-    collide(monster, object) {
+    collide(object, monster) {
         monster.collide();
+        monster.kill();
     }
 }
