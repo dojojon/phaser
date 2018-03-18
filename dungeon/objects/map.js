@@ -40,8 +40,6 @@ export class Map {
 
         //Monster group
         this.monsterGroup = new MonsterGroup(this.game, this.map);
-        this.monsterGroup.fillGroup(49, 'charaters', 48);
-        this.monsterGroup.fillGroup(49, 'charaters', 48);
 
         // Doors have an additional animation
         this.doorsGroup = new DoorGroup(this.game, this.map);
@@ -59,14 +57,25 @@ export class Map {
 
     update(player) {
 
+        // Check to see if the player hits the mine layer
         this.game.physics.arcade.collide(player, this.mineLayer);
 
+        // Player collides with coins and gems
         this.game.physics.arcade.collide(player, this.coinsGroup, this.coinsGroup.collide);
         this.game.physics.arcade.collide(player, this.gemGroup, this.gemGroup.collide);
+
+        // Player collides with blocking objects, doors and chests
         this.game.physics.arcade.collide(player, this.blockingObjects, this.blockingObjects.collide);
         this.game.physics.arcade.collide(player, this.doorsGroup, this.doorsGroup.collide);
         this.game.physics.arcade.collide(player, this.chestsGroup, this.chestsGroup.collide);
-        this.game.physics.arcade.collide(player, this.monsterGroup, this.monsterGroup.collide);
+
+        // Monster collisions
+        this.game.physics.arcade.collide(this.monsterGroup, this.monsterGroup);
+
+        this.game.physics.arcade.collide(this.monsterGroup, this.mineLayer);
+        this.game.physics.arcade.collide(this.monsterGroup, this.blockingObjects);
+        this.game.physics.arcade.collide(this.monsterGroup, this.doorsGroup);
+
 
     }
 }

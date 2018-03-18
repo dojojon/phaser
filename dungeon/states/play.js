@@ -13,6 +13,8 @@ export class Play extends Phaser.State {
 
         this.player = new Player(this.game, 100, 100);
 
+        this.game.player = this.player;
+
         this.headUpDisplay = new HeadsUpDisplay(this.game, this.player);
 
     }
