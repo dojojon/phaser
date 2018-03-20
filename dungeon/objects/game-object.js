@@ -5,4 +5,5 @@ export class GameObject extends Phaser.Group {
         super(game);
 
     }
+
 }

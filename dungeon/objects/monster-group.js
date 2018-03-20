@@ -24,11 +24,19 @@ export class MonsterGroup extends MapGroup {
         this.map.createFromObjects('Monsters', id, spriteSheet, spriteID, true, false, this, Monster);
         this.setAll('body.immovable', true);
         this.setAll('enableBody', true);
+        this.forEach((sprite) => { sprite.body.setSize(sprite.width * MAPSCALE, sprite.height * MAPSCALE); });
 
     }
 
     collide(object, monster) {
         monster.collide();
-        monster.kill();
+    }
+
+    monsterHit(object, monster) {
+        monster.monsterHit(object, monster);
+    }
+
+    monsterHitPlayer(player, monster) {
+        monster.monsterHitPlayer(player, monster);
     }
 }

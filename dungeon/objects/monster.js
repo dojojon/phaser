@@ -1,5 +1,6 @@
 import { GameObject } from "./game-object.js";
 import { MAPSCALE } from "../settings.js";
+import { tweenTint } from '../utils/tween-tint.js';
 
 export class Monster extends Phaser.Sprite {
 
@@ -7,8 +8,9 @@ export class Monster extends Phaser.Sprite {
 
         super(game, x, y, key, frame);
 
-        this.anchor.setTo(0.5, 0.5);
+        // this.anchor.setTo(0.5, 0.5);
         this.enableBody = true;
+        this.health = 50;
 
         // Monster animations
         const monsterID = frame - 1
@@ -69,12 +71,31 @@ export class Monster extends Phaser.Sprite {
 
     }
 
-
     collide(monster, object) {
+        this.checkHealth();
+    }
 
-        console.log('monster hit', this.body.blocked);
-        this.game.player.health = this.game.player.health - 10;
+    monsterHitPlayer(player, monster) {
 
+        if (player === this.game.player.player) {
+            console.log('monster hit player', this.body.blocked);
+            this.game.player.hitByMonster(5);
+            this.health = this.health - 5;
+        }
+
+    }
+
+    monsterHit(object, monster) {
+        console.log('Monster hit');
+        this.health = this.health - 5;
+        tweenTint(this.game, this, 0xff0000, 0xffffff, 150);
+        this.checkHealth();
+    }
+
+    checkHealth() {
+        if (this.health < 1) {
+            this.kill();
+        }
     }
 
 } 

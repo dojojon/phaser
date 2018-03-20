@@ -26,7 +26,6 @@ export class MapGroup extends GameObject {
     }
 
     collide(object, groupItem) {
-        console.log('Hit something');
     }
 
 }

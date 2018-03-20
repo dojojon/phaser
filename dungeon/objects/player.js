@@ -1,6 +1,5 @@
-import {
-    GameObject
-} from './game-object.js';
+import { GameObject } from './game-object.js';
+import { tweenTint } from '../utils/tween-tint.js';
 
 //** Player Game Object */
 export class Player extends GameObject {
@@ -165,4 +164,13 @@ export class Player extends GameObject {
         const keyRequired = 'key_' + lock;
         return this.inventory.includes(keyRequired);
     }
+
+    hitByMonster(hitPoints) {
+        this.health = this.health - hitPoints;
+
+        tweenTint(this.game, this.player, 0xff0000, 0xffffff, 250);
+    }
+
 }
+
+

@@ -58,8 +58,6 @@ export class Map extends GameObject {
 
     update() {
 
-        console.log('Map Update');
-
         // Check to see if the player hits the mine layer
         this.game.physics.arcade.collide(this.game.player, this.mineLayer);
 
@@ -72,9 +70,12 @@ export class Map extends GameObject {
         this.game.physics.arcade.collide(this.game.player, this.doorsGroup, this.doorsGroup.collide);
         this.game.physics.arcade.collide(this.game.player, this.chestsGroup, this.chestsGroup.collide);
 
+        // Check to see if the player weapon hits a monster.
+        this.game.physics.arcade.overlap(this.game.player.weapon, this.monsterGroup, this.monsterGroup.monsterHit);
+
         // Monster collisions
         this.game.physics.arcade.collide(this.monsterGroup, this.monsterGroup);
-        this.game.physics.arcade.collide(this.game.player, this.monsterGroup, this.monsterGroup.collide);
+        this.game.physics.arcade.collide(this.game.player, this.monsterGroup, this.monsterGroup.monsterHitPlayer);
 
         this.game.physics.arcade.collide(this.monsterGroup, this.mineLayer);
         this.game.physics.arcade.collide(this.monsterGroup, this.blockingObjects);
