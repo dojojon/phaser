@@ -60,8 +60,8 @@ export class Player extends GameObject {
 
         this.player.body.velocity.setTo(0, 0);
 
-        // Remove the weapon, we will add it back if we are using it /
-        this.remove(this.weapon);
+        // Set the weapn to invisible
+        this.weapon.visible = false;
 
         // Move the player
         if (this.cursors.left.isDown) {
@@ -85,9 +85,14 @@ export class Player extends GameObject {
         // hit Key pressed, then set up the weapon
         if (this.hitKey.isDown && this.hasWeapon) {
 
-            this.player.body.velocity.setTo(0, 0);
+            // Set the weapn to visible
+            this.weapon.visible = true;
 
-            this.add(this.weapon);
+            // Reset the hit points on the weapon
+            this.weaponHitPoint = 5;
+
+            // Stop the player, running with weapons is dangerous
+            this.player.body.velocity.setTo(0, 0);
 
             if (this.cursors.left.isDown) {
                 this.player.animations.play('left_strike');

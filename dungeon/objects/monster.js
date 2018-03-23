@@ -75,6 +75,7 @@ export class Monster extends Phaser.Sprite {
         this.checkHealth();
     }
 
+    // Player hits monster
     monsterHitPlayer(player, monster) {
 
         if (player === this.game.player.player) {
@@ -85,13 +86,19 @@ export class Monster extends Phaser.Sprite {
 
     }
 
+    // Monster gets hit by players weapon
     monsterHit(object, monster) {
         console.log('Monster hit');
-        this.health = this.health - 5;
-        tweenTint(this.game, this, 0xff0000, 0xffffff, 150);
-        this.checkHealth();
+        if (this.game.player.weapon.visible) {
+            this.health = this.health - this.game.player.weaponHitPoint;
+            this.game.player.weaponHitPoint = 0;
+            tweenTint(this.game, this, 0xff0000, 0xffffff, 150);
+            this.checkHealth();
+        }
+
     }
 
+    // Check the health of the monster
     checkHealth() {
         if (this.health < 1) {
             this.kill();
