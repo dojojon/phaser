@@ -14,4 +14,5 @@ export class Boot extends Phaser.State {
         this.game.state.start('load');
     }
 
+
 }

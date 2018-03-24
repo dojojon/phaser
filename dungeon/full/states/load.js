@@ -45,8 +45,4 @@ export class Load extends Phaser.State {
 
     }
 
-    update() {
-
-    }
-
 }
