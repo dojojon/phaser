@@ -227,7 +227,7 @@ In this section we are going to set up the folder stucture for the game, create 
 
     The last couple lines of the ```create()``` methong set up a keyboard handler.  When the player presses 'S' it runs the ```start()``` method.  The ```start()``` method tells the Phase state manager to move onto the **Play** state.
 
-11.  Last of all we will add a state for playing the game in. We will name this file  ```play.js```.  Add the following code to the file.  This state will just display the text 'Playing' for now.
+11. Last of all we will add a state for playing the game in. We will name this file  ```play.js```.  Add the following code to the file.  This state will just display the text Playing for now.
 
     ```javascript
     export class Play extends Phaser.State {
