@@ -34,12 +34,12 @@ This project has been broken down into chunks will help up build up the game as 
 
 If you want to look at the completed game, check out the source code in full subfolder.
 
-[Step 1 - Project Structure and Phaser States](project_structure_and_phaser_states.md)
-[Step 2 - Add a Player](add_a_player.md)
+1. [Project Structure and Phaser States](project_structure_and_phaser_states.md)
+2. [Add a Player](add_a_player.md)
 
+
+Todo
 ### Tile Map
-
 ### Map Objects
-
 ### Monsters
 
