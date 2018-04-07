@@ -88,6 +88,7 @@ In this section we are going to add a player to the game.  This builds on the pr
     this.add(this.player);
 
     ```
+    If you want to have a female hero, then replace ```'player_m'``` with ```'player_f'``` to load the female sprite sheet.
 
 1. We want the camera to follow the player around, add the following line to the constructor method.
 
