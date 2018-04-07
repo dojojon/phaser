@@ -58,9 +58,11 @@ export class Player extends GameObject {
 
     update() {
 
+        super.update();
+
         this.player.body.velocity.setTo(0, 0);
 
-        // Set the weapn to invisible
+        // Set the weapon to invisible
         this.weapon.visible = false;
 
         // Move the player

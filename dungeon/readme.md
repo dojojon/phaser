@@ -37,9 +37,10 @@ If you want to look at the completed game, check out the source code in full sub
 1. [Project Structure and Phaser States](project_structure_and_phaser_states.md)
 2. [Add a Player](add_a_player.md)
 
-
 Todo
 ### Tile Map
 ### Map Objects
+### Collecting things
+### Doors
 ### Monsters
-
+### Swords 
