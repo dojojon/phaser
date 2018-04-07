@@ -36,7 +36,7 @@ As our dojo has already used Python so we are going to use this approach.
 
 ### Basic Site - HTML, CSS and Javascript
 
-Tutorial on using HTML and Javascript to build a website and run it locally using Python 3.
+Tutorial on using HTML and Javascript to build a website and run it locally using Python 3.  [Basic Site](basic-site/readme.md)
 
 ### First Game
 
