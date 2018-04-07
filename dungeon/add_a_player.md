@@ -1,10 +1,10 @@
 # The Dungeon
 
-You can find our more by starting at the [beginining](readme.md).
+You can find our more by starting at the [beginning](readme.md).
 
 ## Add a Player
 
-In this section we are going to add a player to the game.  This builds on the project structure and states we created in the previous step.  If you want to jump right in you can use the code in the ```add_a_player``` folder.
+In this section we are going to add a player to the game.  This builds on the project structure and states we created in the previous step.  If you want to jump right in you can use the code in the ```add_a_player``` folder as a starting point for the steps below.
 
 1. First lets tell Phaser to load our sprite sheets containing the player.  In the ```load.js``` game state add the following to the ```preload()``` method.  One sprite sheet contains a male charater, the other female.  Save the file.
 
@@ -109,7 +109,11 @@ In this section we are going to add a player to the game.  This builds on the pr
 
     ```javascript
     this.player = new Player(this.game, 100, 100);
+    this.game.player = this.player;
     ```
+
+    The second statement will allow us to access the player from the game instance.
+    
     Save the file.  In your browser, reload and you should now see our hero in the top left of the screen.  If not check the developer console (F12 on windows in most browsers) for any errors.
 
 1. Cool, but not much of a game.  Lets animate the sprite and add the ability to move them around.  The following code should be added to the ```constructor()``` below the existing code.  It creates animations for the player sprite.

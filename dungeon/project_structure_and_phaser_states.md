@@ -1,6 +1,6 @@
 # The Dungeon
 
-You can find our more by starting at the [beginining](readme.md).
+You can find our more by starting at the [beginning](readme.md).
 
 ## Project Structure and Phaser States
 

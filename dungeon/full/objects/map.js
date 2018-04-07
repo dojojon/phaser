@@ -5,6 +5,8 @@ import { MapGroup } from './map-group.js';
 import { MonsterGroup } from './monster-group.js';
 import { GameObject } from './game-object.js';
 
+export const MAPSCALE = 2;
+
 export class Map extends GameObject {
 
     constructor(game) {
