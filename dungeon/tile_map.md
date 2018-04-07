@@ -35,7 +35,7 @@ We are going to use [Tiled](http://www.mapeditor.org/), a free, easy to use and 
 
     Notice that we are loading the same image twice, once as an image and again as a spritesheet.  There is probably a better way to do this, but for now it works.
 
-1. Next we are going to create a new class for our map.  It will extend the ```GameObject``` class.  Add a new file named ```map.js to the objects directory.  Add the following to the file.
+1. Next we are going to create a new class for our map.  It will extend the ```GameObject``` class.  Add a new file named ```map.js``` to the objects directory.  Add the following to the file.
 
     ```javascript
 
