@@ -1,6 +1,6 @@
 import { GameObject } from "./game-object.js";
-import { MAPSCALE } from "../settings.js";
 import { tweenTint } from '../utils/tween-tint.js';
+import { MAPSCALE } from './map.js';
 
 export class Monster extends Phaser.Sprite {
 

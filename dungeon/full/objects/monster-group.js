@@ -1,6 +1,6 @@
 import { MapGroup } from "./map-group.js";
 import { Monster } from "./monster.js";
-import { MAPSCALE } from '../settings.js';
+import { MAPSCALE } from './map.js';
 
 export class MonsterGroup extends MapGroup {
 

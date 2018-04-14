@@ -1,5 +1,5 @@
 import { GameObject } from './game-object.js';
-import { MAPSCALE } from '../settings.js';
+import { MAPSCALE } from './map.js';
 
 export class MapGroup extends GameObject {
     constructor(game, map) {

@@ -1,6 +1,5 @@
 import { ChestGroup } from './chest-group.js';
 import { DoorGroup } from './door-group.js';
-import { MAPSCALE } from '../settings.js';
 import { MapGroup } from './map-group.js';
 import { MonsterGroup } from './monster-group.js';
 import { GameObject } from './game-object.js';
