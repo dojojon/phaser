@@ -1,10 +1,11 @@
-import { GameObject } from "./game-object.js";
+import { GameObject } from './game-object.js';
 
 export const MAPSCALE = 2;
 
 export class Map extends GameObject {
 
     constructor(game) {
+
         super(game);
 
         this.map = this.game.add.tilemap('test_map');
@@ -19,10 +20,11 @@ export class Map extends GameObject {
     }
 
     update() {
+
         super.update();
 
         /** Check to see if the player hits the mine layer */
-        this.game.physics.arcade.collide(this.game.player, this.mineLayer)
-    }
+this.game.physics.arcade.collide(this.game.player, this.mineLayer);
 
+    }
 }
