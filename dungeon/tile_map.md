@@ -4,7 +4,7 @@ You can find our more by starting at the [beginning](readme.md).
 
 ## Add the map
 
-In this section we are going to add a tilemap. Tilemaps are a very popular technique in 2D game development, consisting of building the game world or level map out of small, regular-shaped images called tiles.   If you want to jump right in you can use the code in the ```add_a_player``` folder as a starting point for the steps below.
+In this section we are going to add a tilemap. Tilemaps are a very popular technique in 2D game development, consisting of building the game world or level map out of small, regular-shaped images called tiles.   If you want to jump right in you can use the code in the ```tile_map``` folder as a starting point for the steps below.
 
 We are going to use [Tiled](http://www.mapeditor.org/), a free, easy to use and flexible tile map editor to create the maps.  One has already been included in the full assets directory to get you going for now.
 
