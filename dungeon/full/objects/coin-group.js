@@ -6,7 +6,7 @@ export class CoinGroup extends MapGroup {
 
         super(game, map);
         
-        this.fillGroup(59, 'tiles', 68); 
+        this.fillGroup(69, 'tiles', 69); 
 
     }
    

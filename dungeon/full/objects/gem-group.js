@@ -6,7 +6,7 @@ export class GemGroup extends MapGroup {
 
         super(game, map);
         
-        this.fillGroup(59, 'tiles', 69); 
+        this.fillGroup(70, 'tiles', 68); 
 
     }
    
